@@ -90,7 +90,7 @@ It will now embed the latest version of the assets.
 
 Using the `-nomemcopy` flag, will alter the way the output file is generated.
 It will employ a hack that allows us to read the file data directly from
-the compiled program's `.rodata` section. This ensures that when we call
+the compiled program's `.rodata` section. This ensures that when we
 call our generated function, we omit unnecessary memcopies.
 
 The downside of this, is that it requires dependencies on the `reflect` and
