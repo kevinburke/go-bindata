@@ -13,19 +13,15 @@ const (
 	AppName         = "go-bindata"
 	AppVersionMajor = 3
 	AppVersionMinor = 1
+	AppVersionRev   = 0
 )
 
-// revision part of the program version.
-// This will be set automatically at build time like so:
-//
-//     go build -ldflags "-X main.AppVersionRev `date -u +%s`"
-var AppVersionRev string
-
 func Version() string {
-	if len(AppVersionRev) == 0 {
-		AppVersionRev = "0"
-	}
+	return fmt.Sprintf(`go-bindata version %d.%d.%d`, AppVersionMajor, AppVersionMinor, AppVersionRev)
+}
 
-	return fmt.Sprintf("%s %d.%d.%s (Go runtime %s).\nCopyright (c) 2010-2013, Jim Teeuwen.",
-		AppName, AppVersionMajor, AppVersionMinor, AppVersionRev, runtime.Version())
+func LongVersion() string {
+	return fmt.Sprintf(`%s %d.%d.%d (Go runtime %s).
+Copyright (c) 2010-2015, Jim Teeuwen.
+Copyright (c) 2017, Kevin Burke.`, AppName, AppVersionMajor, AppVersionMinor, AppVersionRev, runtime.Version())
 }

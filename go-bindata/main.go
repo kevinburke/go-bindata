@@ -31,6 +31,7 @@ func main() {
 // This function exits the program with an error, if
 // any of the command line options are incorrect.
 func parseArgs() *bindata.Config {
+	var longVersion bool
 	var version bool
 
 	c := bindata.NewConfig()
@@ -51,7 +52,8 @@ func parseArgs() *bindata.Config {
 	flag.UintVar(&c.Mode, "mode", c.Mode, "Optional file mode override for all files.")
 	flag.Int64Var(&c.ModTime, "modtime", c.ModTime, "Optional modification unix timestamp override for all files.")
 	flag.StringVar(&c.Output, "o", c.Output, "Optional name of the output file to be generated.")
-	flag.BoolVar(&version, "version", false, "Displays version information.")
+	flag.BoolVar(&longVersion, "version", false, "Displays verbose version information.")
+	flag.BoolVar(&version, "v", false, "Displays version information.")
 
 	ignore := make([]string, 0)
 	flag.Var((*AppendSliceValue)(&ignore), "ignore", "Regex pattern to ignore")
@@ -66,6 +68,10 @@ func parseArgs() *bindata.Config {
 
 	if version {
 		fmt.Printf("%s\n", Version())
+		os.Exit(0)
+	}
+	if longVersion {
+		fmt.Printf("%s\n", LongVersion())
 		os.Exit(0)
 	}
 
