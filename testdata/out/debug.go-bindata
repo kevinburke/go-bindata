@@ -25,7 +25,7 @@ type asset struct {
 
 // in_a_test_asset reads file data from disk. It returns an error on failure.
 func in_a_test_asset() (*asset, error) {
-	path := "/Users/tamird/src/go/src/github.com/jteeuwen/go-bindata/testdata/in/a/test.asset"
+	path := "/Users/tamird/src/go/src/github.com/kevinburke/go-bindata/testdata/in/a/test.asset"
 	name := "in/a/test.asset"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -43,7 +43,7 @@ func in_a_test_asset() (*asset, error) {
 
 // in_b_test_asset reads file data from disk. It returns an error on failure.
 func in_b_test_asset() (*asset, error) {
-	path := "/Users/tamird/src/go/src/github.com/jteeuwen/go-bindata/testdata/in/b/test.asset"
+	path := "/Users/tamird/src/go/src/github.com/kevinburke/go-bindata/testdata/in/b/test.asset"
 	name := "in/b/test.asset"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -61,7 +61,7 @@ func in_b_test_asset() (*asset, error) {
 
 // in_c_test_asset reads file data from disk. It returns an error on failure.
 func in_c_test_asset() (*asset, error) {
-	path := "/Users/tamird/src/go/src/github.com/jteeuwen/go-bindata/testdata/in/c/test.asset"
+	path := "/Users/tamird/src/go/src/github.com/kevinburke/go-bindata/testdata/in/c/test.asset"
 	name := "in/c/test.asset"
 	bytes, err := bindata_read(path, name)
 	if err != nil {
@@ -79,7 +79,7 @@ func in_c_test_asset() (*asset, error) {
 
 // in_test_asset reads file data from disk. It returns an error on failure.
 func in_test_asset() (*asset, error) {
-	path := "/Users/tamird/src/go/src/github.com/jteeuwen/go-bindata/testdata/in/test.asset"
+	path := "/Users/tamird/src/go/src/github.com/kevinburke/go-bindata/testdata/in/test.asset"
 	name := "in/test.asset"
 	bytes, err := bindata_read(path, name)
 	if err != nil {

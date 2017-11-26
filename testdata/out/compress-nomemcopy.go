@@ -71,7 +71,7 @@ func (fi bindataFileInfo) Sys() interface{} {
 	return nil
 }
 
-var _inATestAsset = "\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\xd2\xd7\x57\x28\x4e\xcc\x2d\xc8\x49\x55\x48\xcb\xcc\x49\xe5\x02\x04\x00\x00\xff\xff\x8a\x82\x8c\x85\x0f\x00\x00\x00"
+var _inATestAsset = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff\xd2\xd7\x57\x28\x4e\xcc\x2d\xc8\x49\x55\x48\xcb\xcc\x49\xe5\x02\x04\x00\x00\xff\xff\x8a\x82\x8c\x85\x0f\x00\x00\x00"
 
 func inATestAssetBytes() ([]byte, error) {
 	return bindataRead(
@@ -86,12 +86,12 @@ func inATestAsset() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "in/a/test.asset", size: 15, mode: os.FileMode(436), modTime: time.Unix(1445582844, 0)}
+	info := bindataFileInfo{name: "in/a/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1511721518, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
-var _inBTestAsset = "\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\xd2\xd7\x57\x28\x4e\xcc\x2d\xc8\x49\x55\x48\xcb\xcc\x49\xe5\x02\x04\x00\x00\xff\xff\x8a\x82\x8c\x85\x0f\x00\x00\x00"
+var _inBTestAsset = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff\xd2\xd7\x57\x28\x4e\xcc\x2d\xc8\x49\x55\x48\xcb\xcc\x49\xe5\x02\x04\x00\x00\xff\xff\x8a\x82\x8c\x85\x0f\x00\x00\x00"
 
 func inBTestAssetBytes() ([]byte, error) {
 	return bindataRead(
@@ -106,12 +106,12 @@ func inBTestAsset() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "in/b/test.asset", size: 15, mode: os.FileMode(436), modTime: time.Unix(1445582844, 0)}
+	info := bindataFileInfo{name: "in/b/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1511721518, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
-var _inCTestAsset = "\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\xd2\xd7\x57\x28\x4e\xcc\x2d\xc8\x49\x55\x48\xcb\xcc\x49\xe5\x02\x04\x00\x00\xff\xff\x8a\x82\x8c\x85\x0f\x00\x00\x00"
+var _inCTestAsset = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff\xd2\xd7\x57\x28\x4e\xcc\x2d\xc8\x49\x55\x48\xcb\xcc\x49\xe5\x02\x04\x00\x00\xff\xff\x8a\x82\x8c\x85\x0f\x00\x00\x00"
 
 func inCTestAssetBytes() ([]byte, error) {
 	return bindataRead(
@@ -126,12 +126,12 @@ func inCTestAsset() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "in/c/test.asset", size: 15, mode: os.FileMode(436), modTime: time.Unix(1445582844, 0)}
+	info := bindataFileInfo{name: "in/c/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1511721518, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
 
-var _inTestAsset = "\x1f\x8b\x08\x00\x00\x09\x6e\x88\x00\xff\xd2\xd7\x57\x28\x4e\xcc\x2d\xc8\x49\x55\x48\xcb\xcc\x49\xe5\x02\x04\x00\x00\xff\xff\x8a\x82\x8c\x85\x0f\x00\x00\x00"
+var _inTestAsset = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff\xd2\xd7\x57\x28\x4e\xcc\x2d\xc8\x49\x55\x48\xcb\xcc\x49\xe5\x02\x04\x00\x00\xff\xff\x8a\x82\x8c\x85\x0f\x00\x00\x00"
 
 func inTestAssetBytes() ([]byte, error) {
 	return bindataRead(
@@ -146,7 +146,7 @@ func inTestAsset() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "in/test.asset", size: 15, mode: os.FileMode(436), modTime: time.Unix(1445582844, 0)}
+	info := bindataFileInfo{name: "in/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1511721518, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
