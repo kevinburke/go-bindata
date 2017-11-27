@@ -8,6 +8,6 @@ go:
   - master
 
 script:
-  - make race-test
+  - make ci
 
 sudo: false

@@ -77,6 +77,13 @@ func Translate(c *Config) error {
 
 	// Write assets.
 	if c.Debug || c.Dev {
+		if os.Getenv("GO_BINDATA_TEST") == "true" {
+			// If we don't do this, people running the tests on different
+			// machines get different git diffs.
+			for i := range toc {
+				toc[i].Path = strings.Replace(toc[i].Path, wd, "/test", 1)
+			}
+		}
 		err = writeDebug(buf, c, toc)
 	} else {
 		err = writeRelease(buf, c, toc)
@@ -206,7 +213,10 @@ func findFiles(dir, prefix string, recursive bool, toc *[]Asset, ignore []*regex
 		}
 
 		asset.Func = safeFunctionName(asset.Name, knownFuncs)
-		asset.Path, _ = filepath.Abs(asset.Path)
+		asset.Path, err = filepath.Abs(asset.Path)
+		if err != nil {
+			return err
+		}
 		*toc = append(*toc, asset)
 	}
 

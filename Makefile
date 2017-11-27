@@ -1,8 +1,15 @@
+DIFFER := $(GOPATH)/bin/differ
 MEGACHECK := $(GOPATH)/bin/megacheck
 WRITE_MAILMAP := $(GOPATH)/bin/write_mailmap
 
 all:
-	make -C testdata
+	$(MAKE) -C testdata
+
+$(DIFFER):
+	go get -u github.com/kevinburke/differ
+
+diff-testdata: | $(DIFFER)
+	$(DIFFER) $(MAKE) -C testdata
 
 $(MEGACHECK):
 	go get honnef.co/go/tools/cmd/megacheck
@@ -11,13 +18,17 @@ lint: | $(MEGACHECK)
 	go vet ./...
 	$(MEGACHECK) ./...
 
-test:
+go-test:
 	go test ./...
-	make -C testdata
 
-race-test: lint
+go-race-test:
 	go test -race ./...
-	make -C testdata
+
+test: go-test
+	$(MAKE) -C testdata
+
+race-test: lint go-race-test
+	$(MAKE) -C testdata
 
 $(WRITE_MAILMAP):
 	go get -u github.com/kevinburke/write_mailmap
@@ -28,3 +39,5 @@ AUTHORS.txt: force | $(WRITE_MAILMAP)
 	$(WRITE_MAILMAP) > AUTHORS.txt
 
 authors: AUTHORS.txt
+
+ci: go-race-test diff-testdata
