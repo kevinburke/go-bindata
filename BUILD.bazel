@@ -1,0 +1,31 @@
+load("@io_bazel_rules_go//go:def.bzl", "gazelle", "go_library", "go_test")
+
+gazelle(
+    name = "gazelle",
+    prefix = "github.com/kevinburke/go-bindata",
+)
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "asset.go",
+        "bytewriter.go",
+        "config.go",
+        "convert.go",
+        "debug.go",
+        "doc.go",
+        "release.go",
+        "restore.go",
+        "stringwriter.go",
+        "toc.go",
+    ],
+    importpath = "github.com/kevinburke/go-bindata",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["convert_test.go"],
+    importpath = "github.com/kevinburke/go-bindata",
+    library = ":go_default_library",
+)
