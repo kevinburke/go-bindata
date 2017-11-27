@@ -1,7 +1,15 @@
 ## bindata
 
-(This fork is maintained by Kevin Burke. Don't expect many new features, though
-I will take a look at PR's).
+*This fork is maintained by Kevin Burke. Don't expect many new features, though
+I will take a look at PR's. Changes made include:*
+
+- Atomic writes; generated file cannot be read while partially complete.
+
+- Generated code is run through go fmt.
+
+- ByName is not public
+
+- Some errors in file writes not ignored.
 
 This package converts any file into manageable Go source code. Useful for
 embedding binary data into a go program. The file data is optionally gzip
