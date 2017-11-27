@@ -10,6 +10,7 @@ $(DIFFER):
 
 diff-testdata: | $(DIFFER)
 	$(DIFFER) $(MAKE) -C testdata
+	$(DIFFER) go fmt ./testdata/out/...
 
 $(MEGACHECK):
 	go get honnef.co/go/tools/cmd/megacheck
