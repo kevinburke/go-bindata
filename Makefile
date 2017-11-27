@@ -1,4 +1,5 @@
 MEGACHECK := $(GOPATH)/bin/megacheck
+WRITE_MAILMAP := $(GOPATH)/bin/write_mailmap
 
 all:
 	make -C testdata
@@ -17,3 +18,13 @@ test:
 race-test: lint
 	go test -race ./...
 	make -C testdata
+
+$(WRITE_MAILMAP):
+	go get -u github.com/kevinburke/write_mailmap
+
+force: ;
+
+AUTHORS.txt: force | $(WRITE_MAILMAP)
+	$(WRITE_MAILMAP) > AUTHORS.txt
+
+authors: AUTHORS.txt
