@@ -1,5 +1,6 @@
 DIFFER := $(GOPATH)/bin/differ
 MEGACHECK := $(GOPATH)/bin/megacheck
+RELEASE := $(GOPATH)/bin/github-release
 WRITE_MAILMAP := $(GOPATH)/bin/write_mailmap
 
 all:
@@ -42,3 +43,22 @@ AUTHORS.txt: force | $(WRITE_MAILMAP)
 authors: AUTHORS.txt
 
 ci: go-race-test diff-testdata
+
+release: | $(RELEASE) race-test diff-testdata
+ifndef version
+	@echo "Please provide a version"
+	exit 1
+endif
+ifndef GITHUB_TOKEN
+	@echo "Please set GITHUB_TOKEN in the environment"
+	exit 1
+endif
+	mkdir -p releases/$(version)
+	GOOS=linux GOARCH=amd64 go build -o releases/$(version)/go-bindata-linux-amd64 ./go-bindata
+	GOOS=darwin GOARCH=amd64 go build -o releases/$(version)/go-bindata-darwin-amd64 ./go-bindata
+	GOOS=windows GOARCH=amd64 go build -o releases/$(version)/go-bindata-windows-amd64 ./go-bindata
+	# these commands are not idempotent so ignore failures if an upload repeats
+	$(RELEASE) release --user kevinburke --repo go-bindata --tag $(version) || true
+	$(RELEASE) upload --user kevinburke --repo go-bindata --tag $(version) --name go-bindata-linux-amd64 --file releases/$(version)/go-bindata-linux-amd64 || true
+	$(RELEASE) upload --user kevinburke --repo go-bindata --tag $(version) --name go-bindata-darwin-amd64 --file releases/$(version)/go-bindata-darwin-amd64 || true
+	$(RELEASE) upload --user kevinburke --repo go-bindata --tag $(version) --name go-bindata-windows-amd64 --file releases/$(version)/go-bindata-windows-amd64 || true

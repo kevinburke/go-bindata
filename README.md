@@ -9,7 +9,7 @@ I will take a look at PR's. Changes made include:*
 
 - ByName is not public
 
-- Some errors in file writes not ignored.
+- Some errors in file writes are now checked.
 
 This package converts any file into manageable Go source code. Useful for
 embedding binary data into a go program. The file data is optionally gzip
