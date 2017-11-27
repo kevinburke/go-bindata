@@ -182,7 +182,6 @@ Running with the `-prefix` flag, we get:
 
 	_bindata["templates/foo.html"] = templates_foo_html
 
-
 ### Build tags
 
 With the optional `-tags` flag, you can specify any go build tags that
