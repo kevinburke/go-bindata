@@ -118,13 +118,14 @@ func bindataRead(data, name string) ([]byte, error) {
 
 	var buf bytes.Buffer
 	_, err = io.Copy(&buf, gz)
-	clErr := gz.Close()
 
 	if err != nil {
 		return nil, fmt.Errorf("Read %%q: %%v", name, err)
 	}
+
+	clErr := gz.Close()
 	if clErr != nil {
-		return nil, err
+		return nil, clErr
 	}
 
 	return buf.Bytes(), nil

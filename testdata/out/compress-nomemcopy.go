@@ -27,13 +27,14 @@ func bindataRead(data, name string) ([]byte, error) {
 
 	var buf bytes.Buffer
 	_, err = io.Copy(&buf, gz)
-	clErr := gz.Close()
 
 	if err != nil {
 		return nil, fmt.Errorf("Read %q: %v", name, err)
 	}
+
+	clErr := gz.Close()
 	if clErr != nil {
-		return nil, err
+		return nil, clErr
 	}
 
 	return buf.Bytes(), nil
@@ -85,7 +86,7 @@ func inATestAsset() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "in/a/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1511721518, 0)}
+	info := bindataFileInfo{name: "in/a/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1511747717, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -105,7 +106,7 @@ func inBTestAsset() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "in/b/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1511721518, 0)}
+	info := bindataFileInfo{name: "in/b/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1511747717, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -125,7 +126,7 @@ func inCTestAsset() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "in/c/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1511721518, 0)}
+	info := bindataFileInfo{name: "in/c/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1511747717, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -145,7 +146,7 @@ func inTestAsset() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "in/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1511721518, 0)}
+	info := bindataFileInfo{name: "in/test.asset", size: 15, mode: os.FileMode(420), modTime: time.Unix(1511747717, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -203,8 +204,11 @@ func AssetNames() []string {
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]func() (*asset, error){
 	"in/a/test.asset": inATestAsset,
+
 	"in/b/test.asset": inBTestAsset,
+
 	"in/c/test.asset": inCTestAsset,
+
 	"in/test.asset": inTestAsset,
 }
 
@@ -247,6 +251,7 @@ type bintree struct {
 	Func     func() (*asset, error)
 	Children map[string]*bintree
 }
+
 var _bintree = &bintree{nil, map[string]*bintree{
 	"in": &bintree{nil, map[string]*bintree{
 		"a": &bintree{nil, map[string]*bintree{
@@ -280,11 +285,7 @@ func RestoreAsset(dir, name string) error {
 	if err != nil {
 		return err
 	}
-	err = os.Chtimes(_filePath(dir, name), info.ModTime(), info.ModTime())
-	if err != nil {
-		return err
-	}
-	return nil
+	return os.Chtimes(_filePath(dir, name), info.ModTime(), info.ModTime())
 }
 
 // RestoreAssets restores an asset under the given directory recursively
@@ -308,4 +309,3 @@ func _filePath(dir, name string) string {
 	cannonicalName := strings.Replace(name, "\\", "/", -1)
 	return filepath.Join(append([]string{dir}, strings.Split(cannonicalName, "/")...)...)
 }
-
