@@ -84,17 +84,56 @@ func writeReleaseAsset(w io.Writer, c *Config, asset *Asset) error {
 	return asset_release_common(w, c, asset)
 }
 
+var (
+	backquote = []byte("`")
+	bom       = []byte("\xEF\xBB\xBF")
+)
+
 // sanitize prepares a valid UTF-8 string as a raw string constant.
 // Based on https://code.google.com/p/go/source/browse/godoc/static/makestatic.go?repo=tools
 func sanitize(b []byte) []byte {
-	// Replace ` with `+"`"+`
-	b = bytes.Replace(b, []byte("`"), []byte("`+\"`\"+`"), -1)
+	var chunks [][]byte
+	for i, b := range bytes.Split(b, backquote) {
+		if i > 0 {
+			chunks = append(chunks, backquote)
+		}
+		for j, c := range bytes.Split(b, bom) {
+			if j > 0 {
+				chunks = append(chunks, bom)
+			}
+			if len(c) > 0 {
+				chunks = append(chunks, c)
+			}
+		}
+	}
 
-	// Replace BOM with `+"\xEF\xBB\xBF"+`
-	// (A BOM is valid UTF-8 but not permitted in Go source files.
-	// I wouldn't bother handling this, but for some insane reason
-	// jquery.js has a BOM somewhere in the middle.)
-	return bytes.Replace(b, []byte("\xEF\xBB\xBF"), []byte("`+\"\\xEF\\xBB\\xBF\"+`"), -1)
+	var buf bytes.Buffer
+	sanitizeChunks(&buf, chunks)
+	return buf.Bytes()
+}
+
+func sanitizeChunks(buf *bytes.Buffer, chunks [][]byte) {
+	n := len(chunks)
+	if n >= 2 {
+		buf.WriteString("(")
+		sanitizeChunks(buf, chunks[:n/2])
+		buf.WriteString(" + ")
+		sanitizeChunks(buf, chunks[n/2:])
+		buf.WriteString(")")
+		return
+	}
+	b := chunks[0]
+	if bytes.Equal(b, backquote) {
+		buf.WriteString("\"`\"")
+		return
+	}
+	if bytes.Equal(b, bom) {
+		buf.WriteString(`"\xEF\xBB\xBF"`)
+		return
+	}
+	buf.WriteString("`")
+	buf.Write(b)
+	buf.WriteString("`")
 }
 
 func header_compressed_nomemcopy(w io.Writer) error {
@@ -337,7 +376,7 @@ func uncompressed_memcopy(w io.Writer, asset *Asset, r io.Reader) error {
 		return err
 	}
 	if utf8.Valid(b) && !bytes.Contains(b, []byte{0}) {
-		fmt.Fprintf(w, "`%s`", sanitize(b))
+		w.Write(sanitize(b))
 	} else {
 		fmt.Fprintf(w, "%+q", b)
 	}
