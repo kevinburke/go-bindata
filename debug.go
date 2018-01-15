@@ -30,6 +30,7 @@ func writeDebug(w io.Writer, c *Config, toc []Asset) error {
 // This targets debug builds.
 func writeDebugHeader(w io.Writer) error {
 	_, err := fmt.Fprintf(w, `import (
+	"crypto/sha256"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -47,8 +48,9 @@ func bindataRead(path, name string) ([]byte, error) {
 }
 
 type asset struct {
-	bytes []byte
-	info  os.FileInfo
+	bytes  []byte
+	info   os.FileInfo
+	digest [sha256.Size]byte
 }
 
 `)

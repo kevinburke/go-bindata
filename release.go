@@ -7,6 +7,7 @@ package bindata
 import (
 	"bytes"
 	"compress/gzip"
+	"crypto/sha256"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -65,23 +66,27 @@ func writeReleaseAsset(w io.Writer, c *Config, asset *Asset) error {
 
 	defer fd.Close()
 
+	h := sha256.New()
+	tr := io.TeeReader(fd, h)
 	if c.NoCompress {
 		if c.NoMemCopy {
-			err = uncompressed_nomemcopy(w, asset, fd)
+			err = uncompressed_nomemcopy(w, asset, tr)
 		} else {
-			err = uncompressed_memcopy(w, asset, fd)
+			err = uncompressed_memcopy(w, asset, tr)
 		}
 	} else {
 		if c.NoMemCopy {
-			err = compressed_nomemcopy(w, asset, fd)
+			err = compressed_nomemcopy(w, asset, tr)
 		} else {
-			err = compressed_memcopy(w, asset, fd)
+			err = compressed_memcopy(w, asset, tr)
 		}
 	}
 	if err != nil {
 		return err
 	}
-	return asset_release_common(w, c, asset)
+	var digest [sha256.Size]byte
+	copy(digest[:], h.Sum(nil))
+	return asset_release_common(w, c, asset, digest)
 }
 
 var (
@@ -140,6 +145,7 @@ func header_compressed_nomemcopy(w io.Writer) error {
 	_, err := fmt.Fprintf(w, `import (
 	"bytes"
 	"compress/gzip"
+	"crypto/sha256"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -178,6 +184,7 @@ func header_compressed_memcopy(w io.Writer) error {
 	_, err := fmt.Fprintf(w, `import (
 	"bytes"
 	"compress/gzip"
+	"crypto/sha256"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -213,6 +220,7 @@ func bindataRead(data []byte, name string) ([]byte, error) {
 
 func header_uncompressed_nomemcopy(w io.Writer) error {
 	_, err := fmt.Fprintf(w, `import (
+	"crypto/sha256"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -240,6 +248,7 @@ func bindataRead(data, name string) ([]byte, error) {
 
 func header_uncompressed_memcopy(w io.Writer) error {
 	_, err := fmt.Fprintf(w, `import (
+	"crypto/sha256"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -253,8 +262,9 @@ func header_uncompressed_memcopy(w io.Writer) error {
 
 func header_release_common(w io.Writer) error {
 	_, err := fmt.Fprintf(w, `type asset struct {
-	bytes []byte
-	info  os.FileInfo
+	bytes  []byte
+	info   os.FileInfo
+	digest [sha256.Size]byte
 }
 
 type bindataFileInfo struct {
@@ -391,7 +401,7 @@ func %sBytes() ([]byte, error) {
 	return err
 }
 
-func asset_release_common(w io.Writer, c *Config, asset *Asset) error {
+func asset_release_common(w io.Writer, c *Config, asset *Asset, digest [sha256.Size]byte) error {
 	fi, err := os.Stat(asset.Path)
 	if err != nil {
 		return err
@@ -418,10 +428,10 @@ func asset_release_common(w io.Writer, c *Config, asset *Asset) error {
 	}
 
 	info := bindataFileInfo{name: %q, size: %d, mode: os.FileMode(%d), modTime: time.Unix(%d, 0)}
-	a := &asset{bytes: bytes, info: info}
+	a := &asset{bytes: bytes, info: info, digest: %#v}
 	return a, nil
 }
 
-`, asset.Func, asset.Func, asset.Name, size, mode, modTime)
+`, asset.Func, asset.Func, asset.Name, size, mode, modTime, digest)
 	return err
 }

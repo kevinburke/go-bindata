@@ -11,7 +11,7 @@ import (
 
 func writeRestore(w io.Writer) error {
 	_, err := fmt.Fprintf(w, `
-// RestoreAsset restores an asset under the given directory
+// RestoreAsset restores an asset under the given directory.
 func RestoreAsset(dir, name string) error {
 	data, err := Asset(name)
 	if err != nil {
@@ -32,7 +32,7 @@ func RestoreAsset(dir, name string) error {
 	return os.Chtimes(_filePath(dir, name), info.ModTime(), info.ModTime())
 }
 
-// RestoreAssets restores an asset under the given directory recursively
+// RestoreAssets restores an asset under the given directory recursively.
 func RestoreAssets(dir, name string) error {
 	children, err := AssetDir(name)
 	// File

@@ -8,6 +8,7 @@
 package main
 
 import (
+	"crypto/sha256"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -25,8 +26,9 @@ func bindataRead(path, name string) ([]byte, error) {
 }
 
 type asset struct {
-	bytes []byte
-	info  os.FileInfo
+	bytes  []byte
+	info   os.FileInfo
+	digest [sha256.Size]byte
 }
 
 // inATestAsset reads file data from disk. It returns an error on failure.
@@ -116,6 +118,12 @@ func Asset(name string) ([]byte, error) {
 	return nil, fmt.Errorf("Asset %s not found", name)
 }
 
+// AssetString returns the asset contents as a string (instead of a []byte).
+func AssetString(name string) (string, error) {
+	data, err := Asset(name)
+	return string(data), err
+}
+
 // MustAsset is like Asset but panics when Asset would return an error.
 // It simplifies safe initialization of global variables.
 func MustAsset(name string) []byte {
@@ -125,6 +133,12 @@ func MustAsset(name string) []byte {
 	}
 
 	return a
+}
+
+// MustAssetString is like AssetString but panics when Asset would return an
+// error. It simplifies safe initialization of global variables.
+func MustAssetString(name string) string {
+	return string(MustAsset(name))
 }
 
 // AssetInfo loads and returns the asset info for the given name.
@@ -140,6 +154,33 @@ func AssetInfo(name string) (os.FileInfo, error) {
 		return a.info, nil
 	}
 	return nil, fmt.Errorf("AssetInfo %s not found", name)
+}
+
+// AssetDigest returns the digest of the file with the given name. It returns an
+// error if the asset could not be found or the digest could not be loaded.
+func AssetDigest(name string) ([sha256.Size]byte, error) {
+	canonicalName := strings.Replace(name, "\\", "/", -1)
+	if f, ok := _bindata[canonicalName]; ok {
+		a, err := f()
+		if err != nil {
+			return [sha256.Size]byte{}, fmt.Errorf("AssetDigest %s can't read by error: %v", name, err)
+		}
+		return a.digest, nil
+	}
+	return [sha256.Size]byte{}, fmt.Errorf("AssetDigest %s not found", name)
+}
+
+// Digests returns a map of all known files and their checksums.
+func Digests() (map[string][sha256.Size]byte, error) {
+	mp := make(map[string][sha256.Size]byte, len(_bindata))
+	for name := range _bindata {
+		a, err := _bindata[name]()
+		if err != nil {
+			return nil, err
+		}
+		mp[name] = a.digest
+	}
+	return mp, nil
 }
 
 // AssetNames returns the names of the assets.
@@ -171,9 +212,9 @@ var _bindata = map[string]func() (*asset, error){
 //       img/
 //         a.png
 //         b.png
-// then AssetDir("data") would return []string{"foo.txt", "img"}
-// AssetDir("data/img") would return []string{"a.png", "b.png"}
-// AssetDir("foo.txt") and AssetDir("notexist") would return an error
+// then AssetDir("data") would return []string{"foo.txt", "img"},
+// AssetDir("data/img") would return []string{"a.png", "b.png"},
+// AssetDir("foo.txt") and AssetDir("notexist") would return an error, and
 // AssetDir("") will return []string{"data"}.
 func AssetDir(name string) ([]string, error) {
 	node := _bintree
@@ -217,7 +258,7 @@ var _bintree = &bintree{nil, map[string]*bintree{
 	}},
 }}
 
-// RestoreAsset restores an asset under the given directory
+// RestoreAsset restores an asset under the given directory.
 func RestoreAsset(dir, name string) error {
 	data, err := Asset(name)
 	if err != nil {
@@ -238,7 +279,7 @@ func RestoreAsset(dir, name string) error {
 	return os.Chtimes(_filePath(dir, name), info.ModTime(), info.ModTime())
 }
 
-// RestoreAssets restores an asset under the given directory recursively
+// RestoreAssets restores an asset under the given directory recursively.
 func RestoreAssets(dir, name string) error {
 	children, err := AssetDir(name)
 	// File
