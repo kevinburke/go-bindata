@@ -23,5 +23,5 @@ func Version() string {
 func LongVersion() string {
 	return fmt.Sprintf(`%s %d.%d.%d (Go runtime %s).
 Copyright (c) 2010-2015, Jim Teeuwen.
-Copyright (c) 2017, Kevin Burke.`, AppName, AppVersionMajor, AppVersionMinor, AppVersionRev, runtime.Version())
+Copyright (c) 2017-2018, Kevin Burke.`, AppName, AppVersionMajor, AppVersionMinor, AppVersionRev, runtime.Version())
 }
