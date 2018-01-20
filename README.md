@@ -7,6 +7,12 @@ I will take a look at PR's. Changes made include:*
 
 - Generated code is run through go fmt.
 
+- SHA256 hashes are computed for all files and stored in the binary. You can
+use this to detect in-memory corruption and to provide easy cache-busting
+mechanisms.
+
+- Added AssetString and MustAssetString functions.
+
 - ByName is not public
 
 - Some errors in file writes are now checked.
@@ -25,7 +31,6 @@ output being generated.
 To install the library and command line program, use the following:
 
 	go get -u github.com/kevinburke/go-bindata/...
-
 
 ### Usage
 
