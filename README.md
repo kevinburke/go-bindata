@@ -28,9 +28,27 @@ output being generated.
 
 ### Installation
 
-To install the library and command line program, use the following:
+On Macs, you can install the binary using [Homebrew](https://brew.sh):
 
-	go get -u github.com/kevinburke/go-bindata/...
+```
+brew install go-bindata
+```
+
+You can also download a binary from the [releases page][releases]. Switch in
+your GOOS for the word "linux" below:
+
+```
+curl --silent --location --output=/usr/local/bin/go-bindata https://github.com/kevinburke/go-bindata/releases/download/3.7.0/go-bindata-linux-amd64 && chmod 755 /usr/local/bin/go-bindata
+```
+
+Alternatively, you can download the source code, if you have a working Go
+installation:
+
+```
+go get -u github.com/kevinburke/go-bindata/...
+```
+
+[releases]: https://github.com/kevinburke/go-bindata/releases
 
 ### Usage
 
