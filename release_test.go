@@ -1,6 +1,11 @@
 package bindata
 
-import "testing"
+import (
+	"bytes"
+	"fmt"
+	"strings"
+	"testing"
+)
 
 var sanitizeTests = []struct {
 	in  string
@@ -19,5 +24,18 @@ func TestSanitize(t *testing.T) {
 		if string(out) != tt.out {
 			t.Errorf("sanitize(%q):\nhave %q\nwant %q", tt.in, out, tt.out)
 		}
+	}
+}
+
+func TestEmptyFile(t *testing.T) {
+	buf := new(bytes.Buffer)
+	c := &Config{NoCompress: true, NoMemCopy: false}
+	err := writeReleaseAsset(buf, c, &Asset{Func: "hello", Path: "testdata/empty/empty_file"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println("buf", buf.String())
+	if !strings.Contains(buf.String(), `[]byte("")`) {
+		t.Errorf("should have got an empty string, got %s", buf.String())
 	}
 }
