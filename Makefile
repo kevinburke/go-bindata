@@ -1,3 +1,5 @@
+SHELL = /bin/bash -o pipefail
+
 BENCHSTAT := $(GOPATH)/bin/benchstat
 DIFFER := $(GOPATH)/bin/differ
 MEGACHECK := $(GOPATH)/bin/megacheck
