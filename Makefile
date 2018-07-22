@@ -1,13 +1,21 @@
+BENCHSTAT := $(GOPATH)/bin/benchstat
 DIFFER := $(GOPATH)/bin/differ
 MEGACHECK := $(GOPATH)/bin/megacheck
 RELEASE := $(GOPATH)/bin/github-release
 WRITE_MAILMAP := $(GOPATH)/bin/write_mailmap
 
+UNAME := $(shell uname)
+
 all:
 	$(MAKE) -C testdata
 
 $(DIFFER):
-	go get -u github.com/kevinburke/differ
+ifeq ($(UNAME), Darwin)
+	curl --silent --location --output $(GOPATH)/bin/differ https://github.com/kevinburke/differ/releases/download/0.5/differ-darwin-amd64 && chmod 755 $(GOPATH)/bin/differ
+endif
+ifeq ($(UNAME), Linux)
+	curl --silent --location --output $(GOPATH)/bin/differ https://github.com/kevinburke/differ/releases/download/0.5/differ-linux-amd64 && chmod 755 $(GOPATH)/bin/differ
+endif
 
 diff-testdata: | $(DIFFER)
 	$(DIFFER) $(MAKE) -C testdata
@@ -31,6 +39,15 @@ test: go-test
 
 race-test: lint go-race-test
 	$(MAKE) -C testdata
+
+$(GOPATH)/bin/go-bindata:
+	go install -v ./...
+
+$(BENCHSTAT):
+	go get golang.org/x/perf/cmd/benchstat
+
+bench: $(GOPATH)/bin/go-bindata | $(BENCHSTAT)
+	go list ./... | grep -v vendor | xargs go test -benchtime=5s -bench=. -run='^$$' 2>&1 | $(BENCHSTAT) /dev/stdin
 
 $(WRITE_MAILMAP):
 	go get -u github.com/kevinburke/write_mailmap

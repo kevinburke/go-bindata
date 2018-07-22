@@ -10,5 +10,6 @@ go:
 
 script:
   - make ci
+  - make bench
 
 sudo: false
