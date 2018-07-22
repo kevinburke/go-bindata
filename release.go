@@ -256,6 +256,7 @@ func header_uncompressed_memcopy(w io.Writer) error {
 	"strings"
 	"time"
 )
+
 `)
 	return err
 }

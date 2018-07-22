@@ -7,7 +7,6 @@ package bindata
 import (
 	"bytes"
 	"fmt"
-	"go/format"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -104,12 +103,8 @@ func Translate(c *Config) error {
 	if err := writeRestore(buf); err != nil {
 		return err
 	}
-	fmted, err := format.Source(buf.Bytes())
-	if err != nil {
-		return err
-	}
 
-	return safefileWriteFile(c.Output, fmted, 0666)
+	return safefileWriteFile(c.Output, buf.Bytes(), 0666)
 }
 
 // Implement sort.Interface for []os.FileInfo based on Name()
