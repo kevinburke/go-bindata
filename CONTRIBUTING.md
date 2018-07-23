@@ -81,6 +81,7 @@ good to keep in mind:
 
 2) Commit the change. The commit message should be the version number.
 
-3) Add a git tag
+3) Add a git tag and push to Github. You MUST push the tag to Github before
+creating a Github release.
 
 4) Run GITHUB_TOKEN=mytoken make release version=my-git-tag

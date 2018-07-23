@@ -72,6 +72,10 @@ ifndef GITHUB_TOKEN
 	@echo "Please set GITHUB_TOKEN in the environment"
 	exit 1
 endif
+	# If you don't push these, Github creates a tagged release for you from the
+	# wrong commit.
+	git push origin master
+	git push origin --tags
 	mkdir -p releases/$(version)
 	GOOS=linux GOARCH=amd64 go build -o releases/$(version)/go-bindata-linux-amd64 ./go-bindata
 	GOOS=darwin GOARCH=amd64 go build -o releases/$(version)/go-bindata-darwin-amd64 ./go-bindata
