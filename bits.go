@@ -41,17 +41,6 @@ func fmtFrac(buf []byte, v uint64, prec int) (nw int, nv uint64) {
 	return w, v
 }
 
-var unitMap = map[string]int64{
-	"bit": int64(bit),
-	"B":   int64(byte_),
-	"kB":  int64(kilobyte),
-	"MB":  int64(megabyte),
-	"GB":  int64(gigabyte),
-	"TB":  int64(terabyte),
-	"PB":  int64(petabyte),
-	"EB":  int64(exabyte),
-}
-
 const (
 	bit   bits = 1
 	byte_      = 8 * bit

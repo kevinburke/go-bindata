@@ -61,7 +61,7 @@ AUTHORS.txt: force | $(WRITE_MAILMAP)
 
 authors: AUTHORS.txt
 
-ci: go-race-test diff-testdata
+ci: lint go-race-test diff-testdata
 
 release: | $(RELEASE) race-test diff-testdata
 ifndef version
