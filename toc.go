@@ -270,7 +270,7 @@ var _bindata = map[string]func() (*asset, error){
 `)
 }
 
-// writeTOCAsset write a TOC entry for the given asset.
+// writeTOCAsset writes a TOC entry for the given asset.
 func writeTOCAsset(w io.Writer, asset *Asset) error {
 	_, err := fmt.Fprintf(w, "\t%q: %s,\n", asset.Name, asset.Func)
 	return err

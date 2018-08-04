@@ -51,12 +51,15 @@ func Translate(c *Config) error {
 	}
 
 	for _, asset := range toc {
-		relative, _ := filepath.Rel(wd, asset.Path)
-		if _, err = fmt.Fprintf(buf, "// %s\n", filepath.ToSlash(relative)); err != nil {
+		relative, err := filepath.Rel(wd, asset.Path)
+		if err != nil {
+			return err
+		}
+		if _, err = fmt.Fprintf(buf, "// %s (%s)\n", filepath.ToSlash(relative), bits(asset.Size)*byte_); err != nil {
 			return err
 		}
 	}
-	if _, err = fmt.Fprint(buf, "\n"); err != nil {
+	if _, err := fmt.Fprint(buf, "\n"); err != nil {
 		return err
 	}
 
@@ -214,6 +217,7 @@ func findFiles(dir, prefix string, recursive bool, toc *[]Asset, ignore []*regex
 		if err != nil {
 			return err
 		}
+		asset.Size = file.Size()
 		*toc = append(*toc, asset)
 	}
 
