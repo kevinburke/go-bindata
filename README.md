@@ -13,7 +13,7 @@ mechanisms.
 
 - Added AssetString and MustAssetString functions.
 
-- ByName is not public
+- ByName is not public.
 
 - Some errors in file writes are now checked.
 
