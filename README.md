@@ -5,6 +5,8 @@ I will take a look at PR's. Changes made include:*
 
 - Atomic writes; generated file cannot be read while partially complete.
 
+- Generated file reports file sizes.
+
 - Generated code is run through go fmt.
 
 - SHA256 hashes are computed for all files and stored in the binary. You can
@@ -15,15 +17,15 @@ mechanisms.
 
 - ByName is not public.
 
-- Some errors in file writes are now checked.
+- Some errors in file writes were unchecked, but are now checked.
 
 This package converts any file into manageable Go source code. Useful for
 embedding binary data into a go program. The file data is optionally gzip
 compressed before being converted to a raw byte slice.
 
-It comes with a command line tool in the `go-bindata` sub directory.
-This tool offers a set of command line options, used to customize the
-output being generated.
+It comes with a command line tool in the `go-bindata` subdirectory. This tool
+offers a set of command line options, used to customize the output being
+generated.
 
 
 ### Installation
@@ -35,10 +37,12 @@ brew install go-bindata
 ```
 
 You can also download a binary from the [releases page][releases]. Switch in
-your GOOS for the word "linux" below:
+your GOOS for the word "linux" below, and the latest version for the version
+listed below:
 
 ```
-curl --silent --location --output=/usr/local/bin/go-bindata https://github.com/kevinburke/go-bindata/releases/download/3.7.0/go-bindata-linux-amd64 && chmod 755 /usr/local/bin/go-bindata
+curl --silent --location --output /usr/local/bin/go-bindata https://github.com/kevinburke/go-bindata/releases/download/v3.11.0/go-bindata-linux-amd64
+chmod 755 /usr/local/bin/go-bindata
 ```
 
 Alternatively, you can download the source code, if you have a working Go
