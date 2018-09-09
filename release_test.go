@@ -2,7 +2,6 @@ package bindata
 
 import (
 	"bytes"
-	"fmt"
 	"strings"
 	"testing"
 )
@@ -34,7 +33,6 @@ func TestEmptyFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fmt.Println("buf", buf.String())
 	if !strings.Contains(buf.String(), `[]byte("")`) {
 		t.Errorf("should have got an empty string, got %s", buf.String())
 	}

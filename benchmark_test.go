@@ -1,6 +1,8 @@
 package bindata_test
 
 import (
+	"go/format"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -42,6 +44,30 @@ func BenchmarkBindata(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		if err := bindata.Translate(cfg); err != nil {
+			b.Fatal(err)
+		}
+	}
+}
+
+var formatSink []byte
+
+func BenchmarkFormatSource(b *testing.B) {
+	// https://github.com/golang/go/issues/26528
+	// unformatted.out is any large go-bindata source file.
+	data, err := ioutil.ReadFile("testdata/unformatted.out")
+	if os.IsNotExist(err) {
+		b.Skip("source file does not exist")
+		return
+	}
+	if err != nil {
+		b.Fatal(err)
+	}
+	b.SetBytes(int64(len(data)))
+	b.ReportAllocs()
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		formatSink, err = format.Source(data)
+		if err != nil {
 			b.Fatal(err)
 		}
 	}
