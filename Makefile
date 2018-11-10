@@ -62,6 +62,7 @@ authors: AUTHORS.txt
 
 ci: lint go-race-test diff-testdata
 
+# Ensure you have updated go-bindata/version.go manually.
 release: | $(RELEASE) race-test diff-testdata
 ifndef version
 	@echo "Please provide a version"
