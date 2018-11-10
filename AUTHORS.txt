@@ -16,6 +16,7 @@ Jessica Forrester <jforrest@redhat.com>
 Jim Teeuwen <jimteeuwen@gmail.com>
 Jordan Liggitt <jordan@liggitt.net>
 Joseph Hager <ajhager@gmail.com>
+Keegan Carruthers-Smith <keegan.csmith@gmail.com>
 Keiji Yoshida <yoshida.keiji.84@gmail.com>
 Kenta Oda <oda@headjapan.com>
 Kevin Burke <kev@inburke.com>
