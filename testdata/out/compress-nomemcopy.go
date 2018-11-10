@@ -23,14 +23,14 @@ import (
 func bindataRead(data, name string) ([]byte, error) {
 	gz, err := gzip.NewReader(strings.NewReader(data))
 	if err != nil {
-		return nil, fmt.Errorf("Read %q: %v", name, err)
+		return nil, fmt.Errorf("read %q: %v", name, err)
 	}
 
 	var buf bytes.Buffer
 	_, err = io.Copy(&buf, gz)
 
 	if err != nil {
-		return nil, fmt.Errorf("Read %q: %v", name, err)
+		return nil, fmt.Errorf("read %q: %v", name, err)
 	}
 
 	clErr := gz.Close()
