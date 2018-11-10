@@ -31,4 +31,4 @@ errcheck:
 	go get github.com/kisielk/errcheck
 
 golint:
-	go get github.com/golang/lint/golint
+	go get golang.org/x/lint/golint
