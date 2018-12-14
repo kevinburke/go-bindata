@@ -3,10 +3,13 @@ FILES:=$(wildcard out/*.go)
 .PHONY: check
 check: errcheck golint $(FILES:.go=.checked)
 
-out/%.checked: out/%.go
+$(GOPATH)/bin/shadow:
+	go get golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
+
+out/%.checked: out/%.go | $(GOPATH)/bin/shadow
 	errcheck $<
 	go vet --all $<
-	go vet --shadow $<
+	go vet --vettool=$(GOPATH)/bin/shadow $<
 	golint $<
 
 $(GOPATH)/bin/go-bindata: $(wildcard ../*.go) $(wildcard ../**/*.go)
