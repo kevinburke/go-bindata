@@ -7,8 +7,10 @@ go:
   - '1.11.x'
   - master
 
+before_install: umask 022
+
 script:
-  - make ci
+  - make ci ; ls -al testdata/out
   - make bench
 
 sudo: false
