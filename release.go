@@ -422,6 +422,8 @@ func asset_release_common(w io.Writer, c *Config, asset *Asset, digest [sha256.S
 	if c.ModTime > 0 {
 		modTime = c.ModTime
 	}
+	fmt.Println(asset.Path, mode, fi.Mode())
+	fmt.Printf("%#v: %#v\n", mode, fi.Mode())
 	_, err = fmt.Fprintf(w, `func %s() (*asset, error) {
 	bytes, err := %sBytes()
 	if err != nil {

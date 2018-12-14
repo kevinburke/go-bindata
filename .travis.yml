@@ -7,9 +7,8 @@ go:
   - '1.11.x'
   - master
 
-before_install: umask 022
-
 script:
+  - find . -type f | grep '/in/' | xargs chmod 420
   - make ci ; ls -al testdata/out
   - make bench
 
