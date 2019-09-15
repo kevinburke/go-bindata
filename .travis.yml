@@ -5,6 +5,8 @@ language: go
 go:
   # go vet --all doesn't work with 1.8 or 1.7
   - '1.11.x'
+  - '1.12.x'
+  - '1.13.x'
   - master
 
 script:
