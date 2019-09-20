@@ -199,7 +199,11 @@ func findFiles(dir, prefix string, recursive bool, toc *[]Asset, ignore []*regex
 		if strings.HasPrefix(asset.Name, prefix) {
 			asset.Name = asset.Name[len(prefix):]
 		} else {
-			asset.Name = filepath.Join(dir, file.Name())
+			if fi.IsDir() {
+				asset.Name = filepath.Join(dir, file.Name())
+			} else {
+				asset.Name = dir
+			}
 		}
 
 		// If we have a leading slash, get rid of it.
