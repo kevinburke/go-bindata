@@ -17,14 +17,47 @@ func TestSafeFunctionName(t *testing.T) {
 
 func TestFindFiles(t *testing.T) {
 	var toc []Asset
-	var knownFuncs = make(map[string]int)
 	var visitedPaths = make(map[string]bool)
-	err := findFiles("testdata/dupname", "testdata/dupname", true, &toc, []*regexp.Regexp{}, knownFuncs, visitedPaths)
+	err := findFiles("testdata/dupname", "testdata/dupname", true, &toc, []*regexp.Regexp{}, nil, visitedPaths)
 	if err != nil {
 		t.Errorf("expected to be no error: %+v", err)
 	}
 	if toc[0].Func == toc[1].Func {
 		t.Errorf("name collision")
+	}
+}
+
+func TestFindFilesOutsidePrefixDirectory(t *testing.T) {
+	var toc []Asset
+	var visitedPaths = make(map[string]bool)
+	err := findFiles("testdata/in/a", "testdata/assets", true, &toc, nil, nil, visitedPaths)
+	if err != nil {
+		t.Errorf("expected to be no error: %+v", err)
+	}
+	if len(toc) != 1 {
+		t.Errorf("expected to find one item, got %d", len(toc))
+	}
+	item := toc[0]
+	want := "testdata/in/a/test.asset"
+	if item.Name != want {
+		t.Errorf("expected Name to be %q, got %q", want, item.Name)
+	}
+}
+
+func TestFindFilesOutsidePrefix(t *testing.T) {
+	var toc []Asset
+	var visitedPaths = make(map[string]bool)
+	err := findFiles("testdata/in/test.asset", "testdata/assets", true, &toc, nil, nil, visitedPaths)
+	if err != nil {
+		t.Errorf("expected to be no error: %+v", err)
+	}
+	if len(toc) != 1 {
+		t.Errorf("expected to find one item, got %d", len(toc))
+	}
+	item := toc[0]
+	want := "testdata/in/test.asset/test.asset"
+	if item.Name != want {
+		t.Errorf("expected Name to be %q, got %q", want, item.Name)
 	}
 }
 
