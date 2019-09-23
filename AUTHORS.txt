@@ -20,7 +20,7 @@ Joseph Hager <ajhager@gmail.com>
 Keegan Carruthers-Smith <keegan.csmith@gmail.com>
 Keiji Yoshida <yoshida.keiji.84@gmail.com>
 Kenta Oda <oda@headjapan.com>
-Kevin Burke <kev@inburke.com>
+Kevin Burke <kevin@burke.dev>
 Matt Dee <mdee@hioscar.com>
 Maxim Ignatenko <imax@cesanta.com>
 MinJae Kwon <mingrammer@gmail.com>
