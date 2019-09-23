@@ -2,7 +2,7 @@ SHELL = /bin/bash -o pipefail
 
 BENCHSTAT := $(GOPATH)/bin/benchstat
 DIFFER := $(GOPATH)/bin/differ
-MEGACHECK := $(GOPATH)/bin/megacheck
+STATICCHECK := $(GOPATH)/bin/staticcheck
 WRITE_MAILMAP := $(GOPATH)/bin/write_mailmap
 
 UNAME := $(shell uname)
@@ -22,12 +22,12 @@ diff-testdata: | $(DIFFER)
 	$(DIFFER) $(MAKE) -C testdata
 	$(DIFFER) go fmt ./testdata/out/...
 
-$(MEGACHECK):
-	go get honnef.co/go/tools/cmd/megacheck
+$(STATICCHECK):
+	go get honnef.co/go/tools/cmd/staticcheck
 
-lint: | $(MEGACHECK)
+lint: | $(STATICCHECK)
 	go vet ./...
-	$(MEGACHECK) ./...
+	$(STATICCHECK) ./...
 
 go-test:
 	go test ./...
