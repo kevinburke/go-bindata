@@ -209,7 +209,11 @@ func findFiles(dirOrFile, prefix string, recursive bool, toc *[]Asset, ignore []
 			asset.Name = strings.TrimPrefix(pathWithSlashes, prefix)
 		} else {
 			// File or directory isn't inside of the prefix list
-			asset.Name = filepath.Join(dirOrFile, entry.Name())
+			if dirOrFileFI.IsDir() {
+				asset.Name = filepath.Join(dirOrFile, entry.Name())
+			} else {
+				asset.Name = dirOrFile
+			}
 		}
 
 		// If we have a leading slash, get rid of it.

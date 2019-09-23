@@ -4,6 +4,7 @@ Anand Gaitonde and Michael Maximilien <agaitonde@pivotallabs.com>
 Andrew Bates <abates@omeganetserv.com>
 Beyang Liu <beyang@sourcegraph.com>
 Brandon Mulcahy <brandon@jangler.info>
+Chris McBride <chris@vistarmedia.com>
 Craig Landry <craigtlandry@gmail.com>
 Dimitri Sokolyuk <demon@dim13.org>
 Dmitri Shuralyov <shurcooL@gmail.com>
