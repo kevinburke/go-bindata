@@ -55,7 +55,7 @@ func TestFindFilesOutsidePrefix(t *testing.T) {
 		t.Errorf("expected to find one item, got %d", len(toc))
 	}
 	item := toc[0]
-	want := "testdata/in/test.asset/test.asset"
+	want := "testdata/in/test.asset"
 	if item.Name != want {
 		t.Errorf("expected Name to be %q, got %q", want, item.Name)
 	}
