@@ -277,7 +277,11 @@ func AssetNames() []string {
 `)
 }
 
-func writeTOCMapHeader(w io.StringWriter) error {
+type stringWriter interface {
+	WriteString(s string) (int, error)
+}
+
+func writeTOCMapHeader(w stringWriter) error {
 	_, err := w.WriteString(`
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]func() (*asset, error){
@@ -292,7 +296,7 @@ func writeTOCAsset(w io.Writer, asset *Asset) error {
 }
 
 // writeTOCFooter writes the table of contents file footer.
-func writeTOCFooter(w io.StringWriter) {
+func writeTOCFooter(w stringWriter) {
 	w.WriteString(`}
 
 `)
