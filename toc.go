@@ -161,10 +161,6 @@ func writeTOC(buf *bytes.Buffer, toc []Asset) error {
 	writeTOCHeader(buf)
 
 	for i := range toc {
-		if i != 0 {
-			// Newlines between elements make gofmt happy.
-			buf.WriteByte('\n')
-		}
 		if err := writeTOCAsset(buf, &toc[i]); err != nil {
 			return err
 		}

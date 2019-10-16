@@ -213,11 +213,8 @@ func AssetNames() []string {
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]func() (*asset, error){
 	"in/a/test.asset": inATestAsset,
-
 	"in/b/test.asset": inBTestAsset,
-
 	"in/c/test.asset": inCTestAsset,
-
 	"in/test.asset": inTestAsset,
 }
 
