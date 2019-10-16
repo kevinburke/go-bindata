@@ -160,13 +160,27 @@ func AssetDir(name string) ([]string, error) {
 func writeTOC(buf *bytes.Buffer, toc []Asset) error {
 	writeTOCHeader(buf)
 
+	// Need an innerBuf so we can call gofmt and get map keys formatted at the
+	// appropriate indentation.
+	innerBuf := new(strings.Builder)
+	if err := writeTOCMapHeader(innerBuf); err != nil {
+		return err
+	}
+
 	for i := range toc {
-		if err := writeTOCAsset(buf, &toc[i]); err != nil {
+		if err := writeTOCAsset(innerBuf, &toc[i]); err != nil {
 			return err
 		}
 	}
 
-	writeTOCFooter(buf)
+	writeTOCFooter(innerBuf)
+	fmted, err := format.Source([]byte(innerBuf.String()))
+	if err != nil {
+		return err
+	}
+	if _, err := buf.Write(fmted); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -260,10 +274,15 @@ func AssetNames() []string {
 	}
 	return names
 }
+`)
+}
 
+func writeTOCMapHeader(w io.StringWriter) error {
+	_, err := w.WriteString(`
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]func() (*asset, error){
 `)
+	return err
 }
 
 // writeTOCAsset writes a TOC entry for the given asset.
@@ -273,8 +292,8 @@ func writeTOCAsset(w io.Writer, asset *Asset) error {
 }
 
 // writeTOCFooter writes the table of contents file footer.
-func writeTOCFooter(buf *bytes.Buffer) {
-	buf.WriteString(`}
+func writeTOCFooter(w io.StringWriter) {
+	w.WriteString(`}
 
 `)
 }

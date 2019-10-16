@@ -197,7 +197,7 @@ var _bindata = map[string]func() (*asset, error){
 	"in/a/test.asset": inATestAsset,
 	"in/b/test.asset": inBTestAsset,
 	"in/c/test.asset": inCTestAsset,
-	"in/test.asset": inTestAsset,
+	"in/test.asset":   inTestAsset,
 }
 
 // AssetDir returns the file names below a certain
