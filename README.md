@@ -5,6 +5,8 @@ Changes made include:*
 
 - Atomic writes; generated file cannot be read while partially complete.
 
+- Better encoding of files that contain characters in the Unicode format range.
+
 - Generated file reports file sizes.
 
 - Generated code is run through go fmt.
