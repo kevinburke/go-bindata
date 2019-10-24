@@ -2,6 +2,8 @@ package bindata
 
 import (
 	"bytes"
+	"fmt"
+	"io/ioutil"
 	"strings"
 	"testing"
 )
@@ -24,6 +26,18 @@ func TestSanitize(t *testing.T) {
 			t.Errorf("sanitize(%q):\nhave %q\nwant %q", tt.in, out, tt.out)
 		}
 	}
+}
+
+func TestEncode(t *testing.T) {
+	t.Skip("used to test unicode ranges")
+	data, err := ioutil.ReadFile("testdata/fa.js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	w := new(bytes.Buffer)
+	uncompressed_memcopy(w, &Asset{}, bytes.NewReader(data))
+	fmt.Println(w.String())
+	t.Fail()
 }
 
 func TestEmptyFile(t *testing.T) {
