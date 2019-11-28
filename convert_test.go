@@ -4,6 +4,8 @@ import (
 	"regexp"
 	"strings"
 	"testing"
+
+	"github.com/kevinburke/go-bindata/testdata/assets"
 )
 
 func TestSafeFunctionName(t *testing.T) {
@@ -119,5 +121,16 @@ func TestFindFilesWithSymlinkedFile(t *testing.T) {
 
 	if len(toc) != 1 {
 		t.Errorf("Only one asset should have been found.  Got %d: %v", len(toc), toc)
+	}
+}
+
+func TestNoPrefixExtensionMatch(t *testing.T) {
+	_, err := assets.Asset("testdata/benchmark/44.jpg")
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = assets.Asset("testdata/benchmark/44.jpgextraextension")
+	if err == nil {
+		t.Fatal("should have returned err retrieving nonexistent file, got nil")
 	}
 }
