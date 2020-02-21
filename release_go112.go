@@ -2,4 +2,4 @@
 
 package bindata
 
-const wrappedError = "%w"
+const wrappedError = "%v"
