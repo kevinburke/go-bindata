@@ -20,7 +20,7 @@ import (
 func bindataRead(path, name string) ([]byte, error) {
 	buf, err := ioutil.ReadFile(path)
 	if err != nil {
-		err = fmt.Errorf("Error reading asset %s at %s: %v", name, path, err)
+		err = fmt.Errorf("Error reading asset %s at %s: %w", name, path, err)
 	}
 	return buf, err
 }
@@ -42,7 +42,7 @@ func inATestAsset() (*asset, error) {
 
 	fi, err := os.Stat(path)
 	if err != nil {
-		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+		err = fmt.Errorf("Error reading asset info %s at %s: %w", name, path, err)
 	}
 
 	a := &asset{bytes: bytes, info: fi}
@@ -60,7 +60,7 @@ func inBTestAsset() (*asset, error) {
 
 	fi, err := os.Stat(path)
 	if err != nil {
-		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+		err = fmt.Errorf("Error reading asset info %s at %s: %w", name, path, err)
 	}
 
 	a := &asset{bytes: bytes, info: fi}
@@ -78,7 +78,7 @@ func inCTestAsset() (*asset, error) {
 
 	fi, err := os.Stat(path)
 	if err != nil {
-		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+		err = fmt.Errorf("Error reading asset info %s at %s: %w", name, path, err)
 	}
 
 	a := &asset{bytes: bytes, info: fi}
@@ -96,7 +96,7 @@ func inTestAsset() (*asset, error) {
 
 	fi, err := os.Stat(path)
 	if err != nil {
-		err = fmt.Errorf("Error reading asset info %s at %s: %v", name, path, err)
+		err = fmt.Errorf("Error reading asset info %s at %s: %w", name, path, err)
 	}
 
 	a := &asset{bytes: bytes, info: fi}
