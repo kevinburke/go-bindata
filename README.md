@@ -40,9 +40,14 @@ On Macs, you can install the binary using [Homebrew](https://brew.sh):
 brew install go-bindata
 ```
 
-Binary installs for every language are provided by `equinox.io`. Install
-go-bindata for your platform by following the instructions here:
-https://go.equinox.io/github.com/kevinburke/go-bindata/go-bindata
+You can also download a binary from the [releases page][releases]. Switch in
+your GOOS for the word "linux" below, and the latest version for the version
+listed below:
+
+```
+curl --silent --location --output /usr/local/bin/go-bindata https://github.com/kevinburke/go-bindata/releases/download/v3.11.0/go-bindata-linux-amd64
+chmod 755 /usr/local/bin/go-bindata
+```
 
 Alternatively, you can download the source code, if you have a working Go
 installation:
@@ -50,6 +55,8 @@ installation:
 ```
 go get -u github.com/kevinburke/go-bindata/...
 ```
+
+[releases]: https://github.com/kevinburke/go-bindata/releases
 
 ### Usage
 

@@ -3,6 +3,7 @@ SHELL = /bin/bash -o pipefail
 BENCHSTAT := $(GOPATH)/bin/benchstat
 DIFFER := $(GOPATH)/bin/differ
 STATICCHECK := $(GOPATH)/bin/staticcheck
+RELEASE := $(GOPATH)/bin/github-release
 WRITE_MAILMAP := $(GOPATH)/bin/write_mailmap
 
 UNAME := $(shell uname)
@@ -68,5 +69,20 @@ ifndef version
 	@echo "Please provide a version"
 	exit 1
 endif
+ifndef GITHUB_TOKEN
+	@echo "Please set GITHUB_TOKEN in the environment"
+	exit 1
+endif
+	# If you don't push these, Github creates a tagged release for you from the
+	# wrong commit.
 	git push origin master
 	git push origin --tags
+	mkdir -p releases/$(version)
+	GOOS=linux GOARCH=amd64 go build -o releases/$(version)/go-bindata-linux-amd64 ./go-bindata
+	GOOS=darwin GOARCH=amd64 go build -o releases/$(version)/go-bindata-darwin-amd64 ./go-bindata
+	GOOS=windows GOARCH=amd64 go build -o releases/$(version)/go-bindata-windows-amd64 ./go-bindata
+	# these commands are not idempotent so ignore failures if an upload repeats
+	$(RELEASE) release --user kevinburke --repo go-bindata --tag $(version) || true
+	$(RELEASE) upload --user kevinburke --repo go-bindata --tag $(version) --name go-bindata-linux-amd64 --file releases/$(version)/go-bindata-linux-amd64 || true
+	$(RELEASE) upload --user kevinburke --repo go-bindata --tag $(version) --name go-bindata-darwin-amd64 --file releases/$(version)/go-bindata-darwin-amd64 || true
+	$(RELEASE) upload --user kevinburke --repo go-bindata --tag $(version) --name go-bindata-windows-amd64 --file releases/$(version)/go-bindata-windows-amd64 || true
