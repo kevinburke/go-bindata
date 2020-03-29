@@ -1,9 +1,11 @@
 go_import_path: github.com/kevinburke/go-bindata
 
 language: go
+dist: bionic
 
 go:
   - '1.13.x'
+  - '1.14.x'
   - master
 
 script:
@@ -12,5 +14,3 @@ script:
   - find testdata/in -type f | xargs chmod 0644
   - make ci
   - make bench
-
-sudo: false
