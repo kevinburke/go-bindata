@@ -15,9 +15,8 @@ import (
 	"unicode"
 )
 
-// Translate reads assets from an input directory, converts them
-// to Go code and writes new files to the output specified
-// in the given configuration.
+// Translate reads assets from an input directory, converts them to Go code and
+// writes new files to the output specified in the given configuration.
 func Translate(c *Config) error {
 	var toc []Asset
 
@@ -107,7 +106,7 @@ func Translate(c *Config) error {
 		return err
 	}
 
-	return safefileWriteFile(c.Output, buf.Bytes(), 0666)
+	return diffAndWrite(c.Output, buf.Bytes(), 0666)
 }
 
 // findFiles recursively finds all the file paths in the given directory tree.
