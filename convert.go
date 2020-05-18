@@ -84,9 +84,9 @@ func Translate(c *Config) error {
 				toc[i].Path = strings.Replace(toc[i].Path, wd, "/test", 1)
 			}
 		}
-		err = writeDebug(buf, c, toc)
+		err = writeDebugFunctions(buf, c, toc)
 	} else {
-		err = writeRelease(buf, c, toc)
+		err = writeReleaseFunctions(buf, c, toc)
 	}
 	if err != nil {
 		return err
@@ -94,6 +94,13 @@ func Translate(c *Config) error {
 
 	// Write table of contents
 	if err := writeTOC(buf, toc); err != nil {
+		return err
+	}
+	_, err = fmt.Fprintf(buf, `// Debug is true if the assets were built with the debug flag enabled.
+const Debug = %t
+
+`, c.Debug)
+	if err != nil {
 		return err
 	}
 	// Write hierarchical tree of assets
