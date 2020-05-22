@@ -200,8 +200,8 @@ var _bindata = map[string]func() (*asset, error){
 	"in/test.asset":   inTestAsset,
 }
 
-// Debug is true if the assets were built with the debug flag enabled.
-const Debug = true
+// AssetDebug is true if the assets were built with the debug flag enabled.
+const AssetDebug = true
 
 // AssetDir returns the file names below a certain
 // directory embedded in the file by go-bindata.

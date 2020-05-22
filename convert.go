@@ -96,8 +96,8 @@ func Translate(c *Config) error {
 	if err := writeTOC(buf, toc); err != nil {
 		return err
 	}
-	_, err = fmt.Fprintf(buf, `// Debug is true if the assets were built with the debug flag enabled.
-const Debug = %t
+	_, err = fmt.Fprintf(buf, `// AssetDebug is true if the assets were built with the debug flag enabled.
+const AssetDebug = %t
 
 `, c.Debug)
 	if err != nil {
