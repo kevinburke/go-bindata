@@ -13,7 +13,7 @@ import (
 const (
 	AppName         = "go-bindata"
 	AppVersionMajor = 3
-	AppVersionMinor = 20
+	AppVersionMinor = 21
 	AppVersionRev   = 0
 )
 
