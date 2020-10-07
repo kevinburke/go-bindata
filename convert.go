@@ -26,9 +26,9 @@ func Translate(c *Config) error {
 	}
 
 	var knownFuncs = make(map[string]int)
-	var visitedPaths = make(map[string]bool)
 	// Locate all the assets.
 	for _, input := range c.Input {
+		var visitedPaths = make(map[string]bool)
 		if err := findFiles(input.Path, c.Prefix, input.Recursive, &toc, c.Ignore, knownFuncs, visitedPaths); err != nil {
 			return err
 		}
