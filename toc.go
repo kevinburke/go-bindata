@@ -57,7 +57,11 @@ func (root *assetTree) funcOrNil() string {
 
 func (root *assetTree) writeGoMap(buf *bytes.Buffer, nident int) {
 	buf.Grow(35) // at least this size
-	fmt.Fprintf(buf, "&bintree{%s, map[string]*bintree{", root.funcOrNil())
+	if nident == 0 {
+		// at the top level we need to declare the map type
+		buf.WriteString("&bintree")
+	}
+	fmt.Fprintf(buf, "{%s, map[string]*bintree{", root.funcOrNil())
 
 	if len(root.Children) > 0 {
 		buf.WriteByte('\n')
@@ -100,11 +104,7 @@ var _bintree = `))
 	}
 	buf := new(bytes.Buffer)
 	root.writeGoMap(buf, 0)
-	fmted, err := format.Source(buf.Bytes())
-	if err != nil {
-		return err
-	}
-	_, writeErr := w.Write(fmted)
+	_, writeErr := w.Write(buf.Bytes())
 	return writeErr
 }
 
@@ -277,11 +277,7 @@ func AssetNames() []string {
 `)
 }
 
-type stringWriter interface {
-	WriteString(s string) (int, error)
-}
-
-func writeTOCMapHeader(w stringWriter) error {
+func writeTOCMapHeader(w io.StringWriter) error {
 	_, err := w.WriteString(`
 // _bindata is a table, holding each asset generator, mapped to its name.
 var _bindata = map[string]func() (*asset, error){
@@ -296,7 +292,7 @@ func writeTOCAsset(w io.Writer, asset *Asset) error {
 }
 
 // writeTOCFooter writes the table of contents file footer.
-func writeTOCFooter(w stringWriter) {
+func writeTOCFooter(w io.StringWriter) {
 	w.WriteString(`}
 
 `)

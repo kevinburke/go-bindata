@@ -15,6 +15,7 @@ Ian Kent <email@iankent.co.uk>
 Jens Breitbart <jbreitbart@gmail.com>
 Jessica Forrester <jforrest@redhat.com>
 Jim Teeuwen <jimteeuwen@gmail.com>
+Johan Brandhorst <johan.brandhorst@gmail.com>
 Jordan Liggitt <jordan@liggitt.net>
 Joseph Hager <ajhager@gmail.com>
 Keegan Carruthers-Smith <keegan.csmith@gmail.com>
