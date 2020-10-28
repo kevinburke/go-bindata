@@ -57,7 +57,7 @@ func (root *assetTree) funcOrNil() string {
 
 func (root *assetTree) writeGoMap(buf *bytes.Buffer, nident int) {
 	buf.Grow(35) // at least this size
-	fmt.Fprintf(buf, "&bintree{%s, map[string]*bintree{", root.funcOrNil())
+	fmt.Fprintf(buf, "{%s, map[string]*bintree{", root.funcOrNil())
 
 	if len(root.Children) > 0 {
 		buf.WriteByte('\n')
