@@ -7,7 +7,10 @@ import (
 	"os"
 )
 
-func diffAndWrite(filename string, data []byte, mode os.FileMode) error {
+// Note: diffAndWrite is doubled for testing purposes.
+var diffAndWrite = diffAndWriteImpl
+
+func diffAndWriteImpl(filename string, data []byte, mode os.FileMode) error {
 	// If the file has the same contents as data, try to avoid a write.
 	f, err := os.Open(filename)
 	if err != nil {

@@ -1,6 +1,7 @@
 package bindata
 
 import (
+	"os"
 	"regexp"
 	"strings"
 	"testing"
@@ -133,4 +134,38 @@ func TestNoPrefixExtensionMatch(t *testing.T) {
 	if err == nil {
 		t.Fatal("should have returned err retrieving nonexistent file, got nil")
 	}
+}
+
+func TestTranslate(t *testing.T) {
+	t.Run("multiple symlinks pointing to the same file", func(t *testing.T) {
+		// Build the config.
+		c := NewConfig()
+		c.Input = []InputConfig{
+			{Path: "testdata/symlinkFile", Recursive: true},
+			{Path: "testdata/symlinkFileDup", Recursive: true},
+		}
+		c.Output = "testdata/symlink_test.go" // Dummy value that isn't used
+
+		// Stub out implementation for diffAndWrite.
+		var output string
+		oldDiffAndWrite := diffAndWrite
+		diffAndWrite = func(filename string, data []byte, mode os.FileMode) error {
+			output = string(data)
+			return nil
+		}
+		defer func() { diffAndWrite = oldDiffAndWrite }()
+
+		if err := Translate(c); err != nil {
+			t.Fatal(err)
+		}
+
+		if len(output) == 0 {
+			t.Fatal("should have data in output file")
+		}
+
+		if !strings.Contains(output, "testdata/symlinkFile/file1") ||
+			!strings.Contains(output, "testdata/symlinkFileDup/file1") {
+			t.Fatal("should have data for both symlinkFile and symlinkFileDup")
+		}
+	})
 }
