@@ -26,6 +26,9 @@ out/nocompress-memcopy.go: $(wildcard in/**/*) $(GOPATH)/bin/go-bindata
 out/nocompress-nomemcopy.go: $(wildcard in/**/*) $(GOPATH)/bin/go-bindata
 	GO_BINDATA_TEST=true $(GOPATH)/bin/go-bindata --modtime=1136214245 --nocompress -nomemcopy -o $@ in/...
 
+out/prefix.go: $(wildcard in/**/*) $(GOPATH)/bin/go-bindata
+	GO_BINDATA_TEST=true $(GOPATH)/bin/go-bindata --modtime=1136214245 --prefix in -o $@ in/...
+
 errcheck:
 	go get github.com/kisielk/errcheck
 

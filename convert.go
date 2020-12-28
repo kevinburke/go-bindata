@@ -25,8 +25,8 @@ func Translate(c *Config) error {
 		return err
 	}
 
-	var knownFuncs = make(map[string]int)
-	var visitedPaths = make(map[string]bool)
+	knownFuncs := make(map[string]int)
+	visitedPaths := make(map[string]bool)
 	// Locate all the assets.
 	for _, input := range c.Input {
 		if err := findFiles(input.Path, c.Prefix, input.Recursive, &toc, c.Ignore, knownFuncs, visitedPaths); err != nil {
@@ -54,6 +54,8 @@ func Translate(c *Config) error {
 		if err != nil {
 			return err
 		}
+		relative = strings.TrimPrefix(relative, c.Prefix)
+		relative = strings.TrimPrefix(relative, "/")
 		if _, err = fmt.Fprintf(buf, "// %s (%s)\n", filepath.ToSlash(relative), bits(asset.Size)*byte_); err != nil {
 			return err
 		}
@@ -223,9 +225,7 @@ func findFiles(dirOrFile, prefix string, recursive bool, toc *[]Asset, ignore []
 		}
 
 		// If we have a leading slash, get rid of it.
-		if len(asset.Name) > 0 && asset.Name[0] == '/' {
-			asset.Name = asset.Name[1:]
-		}
+		asset.Name = strings.TrimPrefix(asset.Name, "/")
 
 		// This shouldn't happen.
 		if len(asset.Name) == 0 {
