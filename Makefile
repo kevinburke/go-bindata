@@ -1,34 +1,21 @@
 SHELL = /bin/bash -o pipefail
 
+export PATH := $(PATH):/usr/local/meter/bin
+
 BENCHSTAT := $(GOPATH)/bin/benchstat
-DIFFER := $(GOPATH)/bin/differ
-STATICCHECK := $(GOPATH)/bin/staticcheck
 RELEASE := $(GOPATH)/bin/github-release
 WRITE_MAILMAP := $(GOPATH)/bin/write_mailmap
-
-UNAME := $(shell uname)
 
 all:
 	$(MAKE) -C testdata
 
-$(DIFFER):
-ifeq ($(UNAME), Darwin)
-	curl --silent --location --output $(GOPATH)/bin/differ https://github.com/kevinburke/differ/releases/download/0.5/differ-darwin-amd64 && chmod 755 $(GOPATH)/bin/differ
-endif
-ifeq ($(UNAME), Linux)
-	curl --silent --location --output $(GOPATH)/bin/differ https://github.com/kevinburke/differ/releases/download/0.5/differ-linux-amd64 && chmod 755 $(GOPATH)/bin/differ
-endif
+diff-testdata:
+	differ $(MAKE) -C testdata
+	differ go fmt ./testdata/out/...
 
-diff-testdata: | $(DIFFER)
-	$(DIFFER) $(MAKE) -C testdata
-	$(DIFFER) go fmt ./testdata/out/...
-
-$(STATICCHECK):
-	go get honnef.co/go/tools/cmd/staticcheck
-
-lint: | $(STATICCHECK)
+lint:
 	go vet ./...
-	$(STATICCHECK) ./...
+	staticcheck ./...
 
 go-test:
 	go test ./...
@@ -61,7 +48,11 @@ AUTHORS.txt: force | $(WRITE_MAILMAP)
 
 authors: AUTHORS.txt
 
-ci: lint go-race-test diff-testdata
+ci-install:
+	curl -s https://packagecloud.io/install/repositories/meter/public/script.deb.sh | sudo bash
+	sudo apt-get -qq -o=Dpkg::Use-Pty=0 install staticcheck differ
+
+ci: ci-install lint go-race-test diff-testdata
 
 # Ensure you have updated go-bindata/version.go manually.
 release: | $(RELEASE) race-test diff-testdata
