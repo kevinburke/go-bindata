@@ -78,7 +78,7 @@ func writeReleaseAsset(w io.Writer, c *Config, asset *Asset) error {
 		if c.NoMemCopy {
 			err = compressed_nomemcopy(w, asset, tr)
 		} else {
-			err = compressed_memcopy(w, asset, tr)
+			err = compressedMemcopy(w, asset, tr)
 		}
 	}
 	if err != nil {
@@ -86,7 +86,7 @@ func writeReleaseAsset(w io.Writer, c *Config, asset *Asset) error {
 	}
 	var digest [sha256.Size]byte
 	copy(digest[:], h.Sum(nil))
-	return asset_release_common(w, c, asset, digest)
+	return assetReleaseCommon(w, c, asset, digest)
 }
 
 var (
@@ -325,7 +325,7 @@ func %sBytes() ([]byte, error) {
 	return err
 }
 
-func compressed_memcopy(w io.Writer, asset *Asset, r io.Reader) error {
+func compressedMemcopy(w io.Writer, asset *Asset, r io.Reader) error {
 	_, err := fmt.Fprintf(w, `var _%s = []byte("`, asset.Func)
 	if err != nil {
 		return err
@@ -420,7 +420,7 @@ func %sBytes() ([]byte, error) {
 	return err
 }
 
-func asset_release_common(w io.Writer, c *Config, asset *Asset, digest [sha256.Size]byte) error {
+func assetReleaseCommon(w io.Writer, c *Config, asset *Asset, digest [sha256.Size]byte) error {
 	fi, err := os.Stat(asset.Path)
 	if err != nil {
 		return err
