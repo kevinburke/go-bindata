@@ -1,0 +1,40 @@
+on: [push, pull_request]
+name: Test
+jobs:
+  test:
+    strategy:
+      matrix:
+        go-version: [1.15.x]
+        platform: [ubuntu-18.04]
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - name: Install Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ matrix.go-version }}
+    - uses: actions/cache@v2
+      with:
+        path: /usr/local/meter/bin
+        key: ${{ runner.os }}-meterbin-v1-${{ hashFiles('**/Makefile') }}
+        restore-keys: |
+          ${{ runner.os }}-meterbin-v1-
+    - uses: actions/cache@v2
+      with:
+        path: /github/home/.cache
+        key: ${{ runner.os }}-go-v1-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-v1-
+    - uses: actions/checkout@v2
+      with:
+         path: './src/github.com/kevinburke/go-bindata'
+    # staticcheck needs this for GOPATH
+    - run: |
+        echo "GOPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+        echo "PATH=$GITHUB_WORKSPACE/bin:$PATH" >> $GITHUB_ENV
+        echo "DEBIAN_FRONTEND=noninteractive" >> $GITHUB_ENV
+    - name: Download dependencies
+      run: go get -t -v ./...
+      working-directory: './src/github.com/kevinburke/go-bindata'
+    - name: Run tests
+      run: make ci
+      working-directory: './src/github.com/kevinburke/go-bindata'
