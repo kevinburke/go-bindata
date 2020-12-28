@@ -12,21 +12,23 @@ jobs:
       uses: actions/setup-go@v2
       with:
         go-version: ${{ matrix.go-version }}
-    - uses: actions/cache@v2
-      with:
-        path: /usr/local/meter/bin
-        key: ${{ runner.os }}-meterbin-v1-${{ hashFiles('**/Makefile') }}
-        restore-keys: |
-          ${{ runner.os }}-meterbin-v1-
-    - uses: actions/cache@v2
-      with:
-        path: /github/home/.cache
-        key: ${{ runner.os }}-go-v1-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-v1-
     - uses: actions/checkout@v2
       with:
          path: './src/github.com/kevinburke/go-bindata'
+    - name: change permissions on meterbin
+      run: sudo mkdir -p /usr/local/meter/bin && sudo chown runner:runner /usr/local/meter/bin
+    - uses: actions/cache@v2
+      with:
+        path: /usr/local/meter/bin
+        key: ${{ runner.os }}-meterbin-v3-${{ hashFiles('./src/github.com/kevinburke/go-bindata/Makefile') }}
+        restore-keys: |
+          ${{ runner.os }}-meterbin-v3-
+    - uses: actions/cache@v2
+      with:
+        path: /home/runner/.cache
+        key: ${{ runner.os }}-go-v3-${{ hashFiles('**/*.go') }}
+        restore-keys: |
+          ${{ runner.os }}-go-v3-
     # staticcheck needs this for GOPATH
     - run: |
         echo "GOPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
