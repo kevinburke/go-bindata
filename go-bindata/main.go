@@ -60,7 +60,12 @@ func parseArgs() *bindata.Config {
 
 	patterns := make([]*regexp.Regexp, 0)
 	for _, pattern := range ignore {
-		patterns = append(patterns, regexp.MustCompile(pattern))
+		rx, err := regexp.Compile(pattern)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "could not parse --ignore flag %q as regex: %v\n", pattern, err)
+			os.Exit(1)
+		}
+		patterns = append(patterns, rx)
 	}
 	c.Ignore = patterns
 
