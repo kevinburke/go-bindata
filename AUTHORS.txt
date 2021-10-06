@@ -6,6 +6,7 @@ Beyang Liu <beyang@sourcegraph.com>
 Brandon Mulcahy <brandon@jangler.info>
 Chris McBride <chris@vistarmedia.com>
 Craig Landry <craigtlandry@gmail.com>
+David Chase <drchase@google.com>
 Dimitri Sokolyuk <demon@dim13.org>
 Dmitri Shuralyov <shurcooL@gmail.com>
 Elazar Leibovich <elazarl@gmail.com>

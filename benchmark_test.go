@@ -27,12 +27,17 @@ func BenchmarkBindata(b *testing.B) {
 		b.Fatal(err)
 	}
 	b.SetBytes(size)
+	outDir, err := ioutil.TempDir("", "bench_bindata")
+	if err != nil {
+		b.Fatal(err)
+	}
+	defer os.RemoveAll(outDir) // clean up
 	cfg := &bindata.Config{
 		Package: "assets",
 		Input: []bindata.InputConfig{
 			{Path: "testdata/benchmark", Recursive: true},
 		},
-		Output:     "testdata/assets/bindata.go",
+		Output:     filepath.Join(outDir, "bindata.go"),
 		NoMemCopy:  false,
 		NoCompress: true,
 		Debug:      false,
