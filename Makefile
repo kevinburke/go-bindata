@@ -70,10 +70,14 @@ endif
 	git push origin --tags
 	mkdir -p releases/$(version)
 	GOOS=linux GOARCH=amd64 go build -o releases/$(version)/go-bindata-linux-amd64 ./go-bindata
+	GOOS=linux GOARCH=arm64 go build -o releases/$(version)/go-bindata-linux-arm64 ./go-bindata
 	GOOS=darwin GOARCH=amd64 go build -o releases/$(version)/go-bindata-darwin-amd64 ./go-bindata
+	GOOS=darwin GOARCH=arm64 go build -o releases/$(version)/go-bindata-darwin-arm64 ./go-bindata
 	GOOS=windows GOARCH=amd64 go build -o releases/$(version)/go-bindata-windows-amd64 ./go-bindata
 	# these commands are not idempotent so ignore failures if an upload repeats
 	$(RELEASE) release --user kevinburke --repo go-bindata --tag $(version) || true
 	$(RELEASE) upload --user kevinburke --repo go-bindata --tag $(version) --name go-bindata-linux-amd64 --file releases/$(version)/go-bindata-linux-amd64 || true
+	$(RELEASE) upload --user kevinburke --repo go-bindata --tag $(version) --name go-bindata-linux-arm64 --file releases/$(version)/go-bindata-linux-arm64 || true
 	$(RELEASE) upload --user kevinburke --repo go-bindata --tag $(version) --name go-bindata-darwin-amd64 --file releases/$(version)/go-bindata-darwin-amd64 || true
+	$(RELEASE) upload --user kevinburke --repo go-bindata --tag $(version) --name go-bindata-darwin-arm64 --file releases/$(version)/go-bindata-darwin-arm64 || true
 	$(RELEASE) upload --user kevinburke --repo go-bindata --tag $(version) --name go-bindata-windows-amd64 --file releases/$(version)/go-bindata-windows-amd64 || true
