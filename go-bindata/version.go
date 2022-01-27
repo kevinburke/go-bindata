@@ -8,12 +8,13 @@ import (
 	"fmt"
 	"runtime"
 	"sync"
+	"time"
 )
 
 const (
 	AppName         = "go-bindata"
 	AppVersionMajor = 3
-	AppVersionMinor = 22
+	AppVersionMinor = 23
 	AppVersionRev   = 0
 )
 
@@ -31,7 +32,9 @@ func LongVersion() string {
 	longVsnOnce.Do(func() {
 		longVsn = fmt.Sprintf(`%s %d.%d.%d (Go runtime %s).
 Copyright (c) 2010-2015, Jim Teeuwen.
-Copyright (c) 2017-2020, Kevin Burke.`, AppName, AppVersionMajor, AppVersionMinor, AppVersionRev, runtime.Version())
+Copyright (c) 2017-%d, Kevin Burke.`, AppName,
+			AppVersionMajor, AppVersionMinor, AppVersionRev,
+			runtime.Version(), time.Now().Year())
 	})
 	return longVsn
 }
