@@ -49,11 +49,12 @@ curl --silent --location --output /usr/local/bin/go-bindata https://github.com/k
 chmod 755 /usr/local/bin/go-bindata
 ```
 
-Alternatively, you can download the source code, if you have a working Go
-installation:
+Alternatively, if you have a working Go installation, you can build the source and install the executable into `$GOPATH/bin` or `$GOBIN`:
 
-```
-go get -u github.com/kevinburke/go-bindata/...
+```shell
+go install github.com/kevinburke/go-bindata/...@latest
+# for versions of Go < 1.11, or without module support, use:
+go install github.com/kevinburke/go-bindata/...
 ```
 
 [releases]: https://github.com/kevinburke/go-bindata/releases
