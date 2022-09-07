@@ -10,6 +10,7 @@ out/%.checked: out/%.go
 
 $(GOPATH)/bin/go-bindata: $(wildcard ../*.go) $(wildcard ../**/*.go)
 	go install -race ../...
+	$(GOPATH)/bin/go-bindata --version
 
 out/compress-memcopy.go: $(wildcard in/**/*) $(GOPATH)/bin/go-bindata
 	GO_BINDATA_TEST=true $(GOPATH)/bin/go-bindata --modtime=1136214245 -o $@ in/...

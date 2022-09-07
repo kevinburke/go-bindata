@@ -52,8 +52,8 @@ AUTHORS.txt: force | $(WRITE_MAILMAP)
 authors: AUTHORS.txt
 
 ci-install:
-	curl -s https://packagecloud.io/install/repositories/meter/public/script.deb.sh | sudo bash
-	sudo apt-get -qq -o=Dpkg::Use-Pty=0 install staticcheck differ
+	go get github.com/kevinburke/differ
+	go get honnef.co/go/tools/cmd/staticcheck
 
 ci: ci-install lint go-race-test diff-testdata
 
