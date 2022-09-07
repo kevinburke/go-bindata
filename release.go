@@ -10,7 +10,6 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"unicode"
 	"unicode/utf8"
@@ -148,7 +147,6 @@ func header_compressed_nomemcopy(w io.Writer) error {
 	"crypto/sha256"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -187,7 +185,6 @@ func header_compressed_memcopy(w io.Writer) error {
 	"crypto/sha256"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -222,7 +219,6 @@ func header_uncompressed_nomemcopy(w io.Writer) error {
 	_, err := fmt.Fprintf(w, `import (
 	"crypto/sha256"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -250,7 +246,6 @@ func header_uncompressed_memcopy(w io.Writer) error {
 	_, err := fmt.Fprintf(w, `import (
 	"crypto/sha256"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -400,7 +395,7 @@ func uncompressed_memcopy(w io.Writer, asset *Asset, r io.Reader) error {
 		return err
 	}
 
-	b, err := ioutil.ReadAll(r)
+	b, err := io.ReadAll(r)
 	if err != nil {
 		return err
 	}

@@ -3,7 +3,7 @@ package bindata
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strings"
 	"testing"
 )
@@ -30,7 +30,7 @@ func TestSanitize(t *testing.T) {
 
 func TestEncode(t *testing.T) {
 	t.Skip("used to test unicode ranges")
-	data, err := ioutil.ReadFile("testdata/fa.js")
+	data, err := os.ReadFile("testdata/fa.js")
 	if err != nil {
 		t.Fatal(err)
 	}

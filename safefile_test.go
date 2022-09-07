@@ -7,7 +7,6 @@ package bindata
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -15,7 +14,7 @@ import (
 )
 
 func ensureFileContains(name, data string) error {
-	b, err := ioutil.ReadFile(name)
+	b, err := os.ReadFile(name)
 	if err != nil {
 		return err
 	}
@@ -141,7 +140,7 @@ func TestOverwriting(t *testing.T) {
 	defer os.Remove(name)
 
 	olddata := "This is old data"
-	err := ioutil.WriteFile(name, []byte(olddata), 0600)
+	err := os.WriteFile(name, []byte(olddata), 0600)
 	if err != nil {
 		t.Fatal(err)
 	}
