@@ -1,3 +1,11 @@
+## 3.24.0
+
+Remove uses of io/ioutil; you must use Go 1.18 or higher with this version of
+go-bindata and its generated asset files.
+
+Update generated doc comments for compatibility with Go's updated doc comment
+guidelines.
+
 ## 3.21.0
 
 Replace "Debug" with "AssetDebug" to reduce the likelihood of conflicts.
