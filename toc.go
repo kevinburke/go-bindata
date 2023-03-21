@@ -109,7 +109,8 @@ var _bintree = `))
 }
 
 func writeTOCTree(w io.Writer, toc []Asset) error {
-	_, err := w.Write([]byte(`// AssetDir returns the file names below a certain
+	innerBuf := new(strings.Builder)
+	_, err := innerBuf.Write([]byte(`// AssetDir returns the file names below a certain
 // directory embedded in the file by go-bindata.
 // For example if you run go-bindata on data/... and data contains the
 // following hierarchy:
@@ -155,7 +156,15 @@ func AssetDir(name string) ([]string, error) {
 		pathList := strings.Split(toc[i].Name, "/")
 		tree.Add(pathList, toc[i])
 	}
-	return tree.WriteAsGoMap(w)
+	if err := tree.WriteAsGoMap(innerBuf); err != nil {
+		return err
+	}
+	fmted, err := format.Source([]byte(innerBuf.String()))
+	if err != nil {
+		return err
+	}
+	_, err = w.Write(fmted)
+	return err
 }
 
 // writeTOC writes the table of contents file.
