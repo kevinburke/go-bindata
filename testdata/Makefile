@@ -32,6 +32,8 @@ out/prefix.go: $(wildcard in/**/*) $(GOPATH)/bin/go-bindata
 
 errcheck:
 	go get github.com/kisielk/errcheck
+	go install github.com/kisielk/errcheck
 
 golint:
 	go get golang.org/x/lint/golint
+	go install golang.org/x/lint/golint
