@@ -69,6 +69,7 @@ func BenchmarkFormatSource(b *testing.B) {
 	b.SetBytes(int64(len(data)))
 	b.ReportAllocs()
 	b.ResetTimer()
+	goimports.LocalPrefix = "github.com/kevinburke/go-bindata"
 	for i := 0; i < b.N; i++ {
 		formatSink, err = format.Source(data)
 		if err != nil {
