@@ -77,11 +77,14 @@ good to keep in mind:
 
 ## New releases
 
-1) Manually update version.go with the new version number.
+1) Manually update version.go with the new version number. ("git commit -m v3.25.0")
 
 2) Commit the change. The commit message should be the version number.
 
 3) Add a git tag and push to Github. You MUST push the tag to Github before
 creating a Github release.
+
+4a) download github-release; go get github.com/github-release/github-release
+4b) download differ; go get github.com/kevinburke/differ
 
 4) Run GITHUB_TOKEN=mytoken make release version=my-git-tag
