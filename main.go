@@ -30,7 +30,7 @@ Apologies for the confusion, this is unavoidable behavior from the Go tool.
 `
 	flag.Usage = func() { fmt.Println(msg) }
 	flag.Parse()
-	if flag.Arg(1) == "version" {
+	if flag.Arg(0) == "version" {
 		fmt.Printf("go-bindata %s (deprecated)\n", AppVersion)
 		os.Exit(0)
 	}
