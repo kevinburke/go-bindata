@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/kevinburke/go-bindata/testdata/assets"
+	"github.com/kevinburke/go-bindata/v3/testdata/assets"
 )
 
 func TestSafeFunctionName(t *testing.T) {
