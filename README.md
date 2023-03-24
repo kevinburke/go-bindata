@@ -45,14 +45,14 @@ your GOOS for the word "linux" below, and the latest version for the version
 listed below:
 
 ```
-curl --silent --location --output /usr/local/bin/go-bindata https://github.com/kevinburke/go-bindata/releases/download/v3.11.0/go-bindata-linux-amd64
+curl --silent --location --output /usr/local/bin/go-bindata https://github.com/kevinburke/go-bindata/releases/download/v4.0.0/go-bindata-linux-amd64
 chmod 755 /usr/local/bin/go-bindata
 ```
 
 Alternatively, if you have a working Go installation, you can build the source and install the executable into `$GOPATH/bin` or `$GOBIN`:
 
 ```shell
-go install github.com/kevinburke/go-bindata/...@latest
+go install github.com/kevinburke/go-bindata/v4/...@latest
 # for versions of Go < 1.11, or without module support, use:
 go install github.com/kevinburke/go-bindata/...
 ```
