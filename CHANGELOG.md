@@ -1,3 +1,8 @@
+## v4
+
+This is meant to satisfy go module versioning behavior; see
+https://stackoverflow.com/a/52058348/329700 for more.
+
 ## 3.24.0
 
 Remove uses of io/ioutil; you must use Go 1.18 or higher with this version of

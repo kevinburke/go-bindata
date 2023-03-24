@@ -1,3 +1,3 @@
-module github.com/kevinburke/go-bindata/v3
+module github.com/kevinburke/go-bindata/v4
 
-go 1.19
+go 1.20
