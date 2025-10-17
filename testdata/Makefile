@@ -31,7 +31,7 @@ out/prefix.go: $(wildcard in/**/*) $(GOPATH)/bin/go-bindata
 	GO_BINDATA_TEST=true $(GOPATH)/bin/go-bindata --modtime=1136214245 --prefix in -o $@ in/...
 
 errcheck:
-	go get github.com/kisielk/errcheck
+	go install github.com/kisielk/errcheck@latest
 
 golint:
-	go get golang.org/x/lint/golint
+	go install golang.org/x/lint/golint@latest

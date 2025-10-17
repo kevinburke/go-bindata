@@ -4,17 +4,17 @@ jobs:
   test:
     strategy:
       matrix:
-        go-version: [1.19.x, 1.20.x]
+        go-version: [1.24.x, 1.25.x]
     runs-on: ubuntu-latest
     steps:
     - name: Install Go
-      uses: actions/setup-go@v3
+      uses: actions/setup-go@v6
       with:
         go-version: ${{ matrix.go-version }}
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
       with:
          path: './src/github.com/kevinburke/go-bindata'
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       with:
         path: /home/runner/.cache
         key: ${{ runner.os }}-go-v3-${{ hashFiles('**/*.go') }}
@@ -22,13 +22,10 @@ jobs:
           ${{ runner.os }}-go-v3-
     # staticcheck needs this for GOPATH
     - run: |
-        echo "GO111MODULE=off" >> $GITHUB_ENV
+        echo "GO111MODULE=on" >> $GITHUB_ENV
         echo "GOPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
         echo "PATH=$GITHUB_WORKSPACE/bin:$PATH" >> $GITHUB_ENV
         echo "DEBIAN_FRONTEND=noninteractive" >> $GITHUB_ENV
-    - name: Download dependencies
-      run: go get -t -v ./...
-      working-directory: './src/github.com/kevinburke/go-bindata'
     - name: Run tests
       run: rm -f ${GOPATH}/bin/go-bindata && make ci
       working-directory: './src/github.com/kevinburke/go-bindata'

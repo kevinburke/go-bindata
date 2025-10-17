@@ -42,7 +42,7 @@ bench: $(GOPATH)/bin/go-bindata | $(BENCHSTAT)
 	go list ./... | grep -v vendor | xargs go test -benchtime=5s -bench=. -run='^$$' 2>&1 | $(BENCHSTAT) /dev/stdin
 
 $(WRITE_MAILMAP):
-	go get -u github.com/kevinburke/write_mailmap
+	go install github.com/kevinburke/write_mailmap@latest
 
 force: ;
 
@@ -52,8 +52,8 @@ AUTHORS.txt: force | $(WRITE_MAILMAP)
 authors: AUTHORS.txt
 
 ci-install:
-	go get github.com/kevinburke/differ
-	go get honnef.co/go/tools/cmd/staticcheck
+	go install github.com/kevinburke/differ@latest
+	go install honnef.co/go/tools/cmd/staticcheck@latest
 
 ci: ci-install lint go-race-test diff-testdata
 
