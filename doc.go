@@ -11,8 +11,7 @@ The following paragraphs cover some of the customization options
 which can be specified in the Config struct, which must be passed into
 the Translate() call.
 
-
-Debug vs Release builds
+# Debug vs Release builds
 
 When used with the `Debug` option, the generated code does not actually include
 the asset data. Instead, it generates function stubs which load the data from
@@ -32,8 +31,7 @@ refresh in the browser to see those changes. Embedding the assets with the
 ready for deployment, just re-invoke `go-bindata` without the `-debug` flag.
 It will now embed the latest version of the assets.
 
-
-Lower memory footprint
+# Lower memory footprint
 
 The `NoMemCopy` option will alter the way the output file is generated.
 It will employ a hack that allows us to read the file data directly from
@@ -79,8 +77,7 @@ generating a runtime error.
 		return b
 	}
 
-
-Optional compression
+# Optional compression
 
 The NoCompress option indicates that the supplied assets are *not* GZIP
 compressed before being turned into Go code. The data should still be accessed
@@ -92,8 +89,7 @@ even increase the size of the data.
 
 The default behavior of the program is to use compression.
 
-
-Path prefix stripping
+# Path prefix stripping
 
 The keys used in the `_bindata` map are the same as the input file name
 passed to `go-bindata`. This includes the path. In most cases, this is not
@@ -114,8 +110,7 @@ Running with the `-prefix` flag, we get:
 
 	_bindata["templates/foo.html"] = templates_foo_html
 
-
-Build tags
+# Build tags
 
 With the optional Tags field, you can specify any go build tags that
 must be fulfilled for the output file to be included in a build. This
@@ -124,6 +119,5 @@ format is specified at build time with the appropriate tags.
 
 The tags are appended to a `// +build` line in the beginning of the output file
 and must follow the build tags syntax specified by the go tool.
-
 */
 package bindata

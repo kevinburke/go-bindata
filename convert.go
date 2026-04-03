@@ -213,8 +213,8 @@ func findFiles(dirOrFile, prefix string, recursive bool, toc *[]Asset, ignore []
 			continue
 		}
 
-		if strings.HasPrefix(pathWithSlashes, prefix) {
-			asset.Name = strings.TrimPrefix(pathWithSlashes, prefix)
+		if after, ok := strings.CutPrefix(pathWithSlashes, prefix); ok {
+			asset.Name = after
 		} else {
 			// File or directory isn't inside of the prefix list
 			if dirOrFileFI.IsDir() {
