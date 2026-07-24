@@ -11,7 +11,7 @@ jobs:
       uses: actions/setup-go@v7.0.0
       with:
         go-version: ${{ matrix.go-version }}
-    - uses: actions/checkout@v7.0.0
+    - uses: actions/checkout@v7.0.1
       with:
          path: './src/github.com/kevinburke/go-bindata'
     - uses: actions/cache@v6.1.0
