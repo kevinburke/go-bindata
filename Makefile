@@ -55,7 +55,9 @@ ci-install:
 	go install github.com/kevinburke/differ@latest
 	go install honnef.co/go/tools/cmd/staticcheck@latest
 
-ci: ci-install lint go-race-test diff-testdata
+ci-test: ci-install lint go-race-test
+
+ci: ci-test diff-testdata
 
 # Ensure you have updated go-bindata/version.go manually.
 release: | $(RELEASE) race-test diff-testdata
