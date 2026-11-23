@@ -1,5 +1,5 @@
-This work is subject to the CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
-license. Its contents can be found at:
+The original material in this repository is subject to the CC0 1.0 Universal
+(CC0 1.0) Public Domain Dedication. Its contents can be found at:
 
 https://creativecommons.org/publicdomain/zero/1.0
 
@@ -32,3 +32,70 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Benchmark photo attribution
+---------------------------
+
+The JPEGs in testdata/benchmark/ are crops and resizes supplied by PlaceKitten.
+The licenses below apply to those JPEGs and to their embedded copies in
+testdata/assets/bindata.go. The numbers in the first column are JPEG filenames
+without the .jpg extension. The PlaceKitten image numbers identify the previews
+on the archived attribution page.
+
+PlaceKitten credits:
+https://web.archive.org/web/20180715000819id_/http://placekitten.com:80/attribution.html
+
+CC BY 2.0: https://creativecommons.org/licenses/by/2.0/
+CC BY-SA 2.0: https://creativecommons.org/licenses/by-sa/2.0/
+
+JPEG numbers           PlaceKitten  License       Credit
+14, 15, 16, 28          1            CC BY-SA 2.0  Nicolas Suzor (nicsuzor)
+34                      2            CC BY 2.0     quatre mains
+4, 19, 23, 39, 49       3            Public domain per PlaceKitten
+12, 20                  4            CC BY-SA 2.0  Energetic Spirit
+1, 30, 36               5            CC BY-SA 2.0  latch.r
+22, 38, 40, 41          6            CC BY-SA 2.0  latch.r
+2, 27, 37, 43, 44, 48   7            CC BY-SA 2.0  olaeinang
+3, 21                   8            CC BY 2.0     quatre mains
+26, 47                  10           CC BY 2.0     quatre mains
+13, 29, 33              11           CC BY-SA 2.0  Paul Esson (pontman)
+32, 35, 45              12           CC BY 2.0     BigTallGuy
+46                      13           CC BY 2.0     fazen
+11, 18, 42              14           CC BY 2.0     BigTallGuy
+7, 9, 10, 17, 25, 31    15           CC BY 2.0     caseydavid
+0, 5, 6, 8, 24          16           CC BY 2.0     quatre mains
+
+Original photos and photographer accounts:
+
+* Nicolas Suzor (nicsuzor), "Kittens!" (PlaceKitten image 1)
+  https://www.flickr.com/photos/nicsuzor/2554668884/
+* quatre mains (Pieter & Renée Lanser), "Titran's Rosalina" (image 8)
+  https://www.flickr.com/photos/35652310@N00/4138812671/
+  CC BY 2.0 is the license recorded by PlaceKitten and in the photo's Flickr
+  license history. The current Flickr page displays "All rights reserved".
+  https://github.com/kevinburke/go-bindata/issues/69
+* quatre mains (images 2, 10, and 16)
+  https://www.flickr.com/photos/titrans/
+* Energetic Spirit (image 4)
+  https://www.flickr.com/photos/nperlapro/
+* latch.r (images 5 and 6)
+  https://www.flickr.com/photos/lachlanrogers/
+* olaeinang (image 7)
+  https://www.flickr.com/photos/olaeinang/
+* Paul Esson (pontman), "Mums Dirty White Kitten" (image 11)
+  https://www.flickr.com/photos/66036063@N00/2353322369/
+* BigTallGuy (images 12 and 14)
+  https://www.flickr.com/photos/bigtallguy/
+* fazen (image 13)
+  https://www.flickr.com/photos/fazen/
+* caseydavid (image 15)
+  https://www.flickr.com/photos/caseydavid/
+
+PlaceKitten labels image 3 public domain. Its original source and photographer
+are unverified.
+https://web.archive.org/web/20180715000819id_/http://placekitten.com/200/200?image=3
+
+Earlier revisions included testdata/gophercolor.png and a generated Go copy.
+The Go gopher is by Renee French and was published under CC BY 3.0.
+https://go.googlesource.com/website/+/7c7e6d209d9c0de0848e95a3d1a3077e078fc29f/go.dev/_content/blog/gopher.md
+https://creativecommons.org/licenses/by/3.0/

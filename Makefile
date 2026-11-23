@@ -33,7 +33,7 @@ $(GOPATH)/bin/go-bindata:
 	go install -v ./...
 
 testdata/assets/bindata.go:
-	go-bindata -o testdata/assets/bindata.go -pkg assets ./testdata/benchmark
+	go-bindata --ignore='ATTRIBUTION\.md$$' -o testdata/assets/bindata.go -pkg assets ./testdata/benchmark
 
 $(BENCHSTAT):
 	go get golang.org/x/perf/cmd/benchstat

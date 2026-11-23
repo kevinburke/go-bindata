@@ -4,24 +4,29 @@ import (
 	"go/format"
 	"os"
 	"path/filepath"
+	"regexp"
 	"testing"
 
 	bindata "github.com/kevinburke/go-bindata/v4"
 )
 
-func dirSize(path string) (int64, error) {
+func dirSize(path string, ignore *regexp.Regexp) (int64, error) {
 	var size int64
-	err := filepath.Walk(path, func(_ string, info os.FileInfo, err error) error {
-		if !info.IsDir() {
+	err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() && !ignore.MatchString(path) {
 			size += info.Size()
 		}
-		return err
+		return nil
 	})
 	return size, err
 }
 
 func BenchmarkBindata(b *testing.B) {
-	size, err := dirSize("testdata/benchmark")
+	ignore := regexp.MustCompile(`ATTRIBUTION\.md$`)
+	size, err := dirSize("testdata/benchmark", ignore)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -42,7 +47,7 @@ func BenchmarkBindata(b *testing.B) {
 		Debug:      false,
 		NoMetadata: true,
 		Mode:       0x0, ModTime: 0,
-		Ignore: nil,
+		Ignore: []*regexp.Regexp{ignore},
 	}
 	b.ReportAllocs()
 	b.ResetTimer()
