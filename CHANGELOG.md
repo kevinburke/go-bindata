@@ -1,3 +1,12 @@
+## v4.0.3 (2026-11-22)
+
+- Document the credits and licenses for the benchmark photos and their
+  embedded copies. Thanks to Helmut Grohne for reporting the missing credits.
+- Test with Go 1.26 and 1.27 in CI. Validate generated fixtures on both
+  versions and compare them byte for byte on Go 1.26.
+- Modernize the Go build constraints, package documentation, and prefix
+  handling.
+
 ## v4
 
 This is meant to satisfy go module versioning behavior; see

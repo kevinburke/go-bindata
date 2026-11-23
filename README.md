@@ -45,7 +45,7 @@ your GOOS for the word "linux" below, and the latest version for the version
 listed below:
 
 ```
-curl --silent --location --output /usr/local/bin/go-bindata https://github.com/kevinburke/go-bindata/releases/download/v4.0.0/go-bindata-linux-amd64
+curl --silent --location --output /usr/local/bin/go-bindata https://github.com/kevinburke/go-bindata/releases/download/v4.0.3/go-bindata-linux-amd64
 chmod 755 /usr/local/bin/go-bindata
 ```
 
